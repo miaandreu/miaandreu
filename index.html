@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mia Andreu | Mechanical Engineering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+        :root{
+            --bg:#1E1E1E;
+            --bg2:#252526;
+            --bg3:#2D2D2D;
+            --tx:#FFFFFF;
+            --tx2:#BBBBBB;
+            --tx3:#707070;
+            --grn:#D8FE01;
+            --grn-dim:rgba(216,254,1,.07);
+            --grn-mid:rgba(216,254,1,.18);
+            --bdr:#2E2E2E;
+            --r:10px;
+            --f:'Inter',system-ui,sans-serif;
+            --m:'JetBrains Mono',monospace;
+        }
+
+        html{scroll-behavior:smooth}
+        body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+        /* =========== NAV =========== */
+        nav{
+            position:fixed;top:0;left:0;right:0;height:56px;
+            background:rgba(30,30,30,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+            border-bottom:1px solid var(--bdr);z-index:100;
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 clamp(1.25rem,5vw,3rem);
+            transition:box-shadow .3s;
+        }
+        nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.5)}
+        .nlogo{font-family:var(--m);font-size:.85rem;font-weight:600;color:var(--tx);text-decoration:none}
+        .nlogo span{color:var(--grn)}
+        .nlinks{display:flex;gap:1.75rem;list-style:none;align-items:center}
+        .nlinks a{font-size:.76rem;font-weight:500;color:var(--tx3);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s}
+        .nlinks a:hover,.nlinks a.active{color:var(--grn)}
+        .nlinks .cta{background:var(--grn);color:#111;padding:.4rem 1rem;border-radius:6px;font-weight:600}
+        .nlinks .cta:hover{background:#c2e500}
+        .ntoggle{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
+        .ntoggle span{width:20px;height:2px;background:var(--tx);border-radius:2px;transition:.3s}
+
+        /* =========== HERO =========== */
+        #hero{
+            min-height:100vh;
+            display:grid;
+            grid-template-columns:1fr auto;
+            align-items:center;
+            gap:clamp(2rem,6vw,5rem);
+            padding:calc(56px + 4rem) clamp(1.25rem,8vw,10rem) 4rem;
+            max-width:1300px;margin:0 auto;
+        }
+        .hero-text{max-width:600px}
+        .hero-label{
+            font-family:var(--m);font-size:.7rem;color:var(--grn);
+            letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5rem;
+            display:flex;align-items:center;gap:.6rem;
+        }
+        .hero-label::before{content:'';width:24px;height:1px;background:var(--grn)}
+        .hero-name{
+            font-size:clamp(2.8rem,7vw,5rem);font-weight:900;
+            letter-spacing:-.04em;line-height:.95;margin-bottom:1.25rem;
+        }
+        .hero-name em{font-style:normal;color:var(--grn)}
+        .hero-sub{font-size:clamp(.95rem,1.6vw,1.1rem);color:var(--tx2);max-width:480px;line-height:1.7;margin-bottom:2rem}
+        .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+        .btn{
+            display:inline-flex;align-items:center;gap:.45rem;
+            padding:.75rem 1.6rem;border-radius:8px;
+            font-weight:600;font-size:.88rem;text-decoration:none;
+            transition:transform .15s,box-shadow .2s,background .2s;border:none;cursor:pointer;
+        }
+        .btn-g{background:var(--grn);color:#111;box-shadow:0 2px 16px rgba(216,254,1,.2)}
+        .btn-g:hover{transform:translateY(-1px);box-shadow:0 4px 24px rgba(216,254,1,.35)}
+        .btn-o{background:transparent;color:var(--tx);border:1.5px solid #444}
+        .btn-o:hover{border-color:var(--grn);color:var(--grn);transform:translateY(-1px)}
+
+        .hero-photo{
+            width:clamp(260px,28vw,400px);
+            border-radius:var(--r);
+            overflow:hidden;
+            border:2px solid var(--bdr);
+            position:relative;
+        }
+        .hero-photo::after{
+            content:'';position:absolute;inset:0;
+            border-radius:var(--r);
+            box-shadow:inset 0 0 0 2px rgba(216,254,1,.15);
+            pointer-events:none;
+        }
+        .hero-photo img{width:100%;height:auto;display:block;filter:grayscale(.15)}
+
+        .hero-stats{
+            display:flex;gap:2.5rem;margin-top:2.5rem;
+            padding-top:1.75rem;border-top:1px solid var(--bdr);flex-wrap:wrap;
+        }
+        .hs-val{font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+        .hs-lbl{font-family:var(--m);font-size:.68rem;color:var(--tx3)}
+
+        /* =========== TICKER =========== */
+        .ticker-wrap{
+            overflow:hidden;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
+            padding:.65rem 0;background:var(--bg2);position:relative;z-index:1;
+        }
+        .ticker{
+            display:flex;gap:2.5rem;
+            animation:scroll 30s linear infinite;
+            width:max-content;
+        }
+        .ticker span{
+            font-family:var(--m);font-size:.72rem;color:var(--tx3);
+            white-space:nowrap;text-transform:uppercase;letter-spacing:.08em;
+        }
+        .ticker .dot{color:var(--grn)}
+        @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+        /* =========== SECTIONS =========== */
+        .sec{padding:6rem clamp(1.25rem,8vw,10rem);max-width:1300px;margin:0 auto}
+        .sec-full{padding:6rem clamp(1.25rem,8vw,10rem);max-width:100%}
+        .sec-full .inner{max-width:1300px;margin:0 auto}
+        .sec-num{
+            font-family:var(--m);font-size:.65rem;color:var(--grn);
+            letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem;
+            display:flex;align-items:center;gap:.6rem;
+        }
+        .sec-num::after{content:'';flex:1;max-width:60px;height:1px;background:var(--bdr)}
+        .sec-t{font-size:clamp(1.6rem,3.5vw,2.25rem);font-weight:700;letter-spacing:-.03em;margin-bottom:.6rem;line-height:1.15}
+        .sec-sub{font-size:.95rem;color:var(--tx2);max-width:540px;line-height:1.7}
+        .sec-hdr{margin-bottom:2.5rem}
+        .divider{height:1px;background:var(--bdr);max-width:1300px;margin:0 auto}
+
+        /* =========== ABOUT =========== */
+        .about-cols{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:start}
+        .about-text p{color:var(--tx2);line-height:1.85;margin-bottom:1.15rem;font-size:.94rem}
+        .about-text strong{color:var(--tx);font-weight:600}
+        .edu{
+            background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+            padding:1.35rem;margin-bottom:1.25rem;
+        }
+        .edu-school{font-weight:700;font-size:.95rem;margin-bottom:.15rem}
+        .edu-deg{font-size:.82rem;color:var(--tx2)}
+        .edu-meta{display:flex;justify-content:space-between;margin-top:.5rem;flex-wrap:wrap;gap:.5rem}
+        .edu-gpa{font-family:var(--m);font-size:.75rem;color:var(--grn);font-weight:600}
+        .edu-date{font-family:var(--m);font-size:.75rem;color:var(--tx3)}
+
+        /* =========== EXPERIENCE =========== */
+        .exp-list{display:flex;flex-direction:column}
+        .exp-row{
+            display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;
+            padding:1.35rem 0;border-bottom:1px solid var(--bdr);
+            cursor:default;transition:padding .3s;
+        }
+        .exp-row:first-child{border-top:1px solid var(--bdr)}
+        .exp-row:hover{padding-left:.5rem}
+        .exp-row:hover .exp-co{color:var(--grn)}
+        .exp-co{font-weight:600;font-size:1rem;transition:color .2s}
+        .exp-rl{font-size:.82rem;color:var(--tx2);margin-top:.1rem}
+        .exp-dt{font-family:var(--m);font-size:.7rem;color:var(--tx3);text-align:right;white-space:nowrap}
+        .exp-det{
+            max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;
+            opacity:0;
+        }
+        .exp-row.open .exp-det{max-height:300px;opacity:1;margin-top:.75rem}
+        .exp-det ul{list-style:none;padding:0}
+        .exp-det li{
+            font-size:.84rem;color:var(--tx2);line-height:1.6;
+            padding-left:1rem;position:relative;margin-bottom:.35rem;
+        }
+        .exp-det li::before{content:'\2192';position:absolute;left:0;color:var(--grn);font-size:.75rem}
+
+        /* =========== IMAGE BREAK =========== */
+        .img-break{
+            width:100%;height:420px;overflow:hidden;position:relative;
+        }
+        .img-break img{width:100%;height:100%;object-fit:cover;display:block}
+        .img-break .overlay{
+            position:absolute;inset:0;
+            background:linear-gradient(to top,var(--bg) 0%,transparent 40%,transparent 70%,var(--bg) 100%);
+        }
+        .img-break .caption{
+            position:absolute;bottom:2rem;left:clamp(1.25rem,8vw,10rem);
+            font-family:var(--m);font-size:.7rem;color:var(--tx3);
+            letter-spacing:.08em;text-transform:uppercase;
+        }
+        .img-break .caption span{color:var(--grn)}
+
+        /* =========== PROJECTS BENTO =========== */
+        .bento{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            grid-auto-rows:minmax(280px,auto);
+            gap:1rem;
+        }
+        .bento-item{
+            background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+            overflow:hidden;position:relative;
+            display:flex;flex-direction:column;
+            transition:transform .25s,box-shadow .25s,border-color .25s;
+        }
+        .bento-item:hover{
+            transform:translateY(-4px);
+            box-shadow:0 16px 48px rgba(0,0,0,.4);
+            border-color:var(--grn);
+        }
+        .bento-item.large{grid-column:span 2;grid-row:span 1}
+        .bento-img{width:100%;max-height:320px;object-fit:cover;display:block;border-bottom:1px solid var(--bdr)}
+        .bento-item.large .bento-img{max-height:380px}
+        .bento-vid{width:100%;max-height:320px;object-fit:cover;display:block;border-bottom:1px solid var(--bdr)}
+        .bento-body{padding:1.35rem;flex:1;display:flex;flex-direction:column}
+        .bento-badge{
+            display:inline-block;
+            background:var(--grn-dim);color:var(--grn);border:1px solid var(--grn-mid);
+            font-family:var(--m);font-size:.62rem;font-weight:600;
+            padding:.15rem .55rem;border-radius:100px;
+            text-transform:uppercase;letter-spacing:.04em;
+            margin-bottom:.6rem;width:fit-content;
+        }
+        .bento-title{font-weight:700;font-size:.98rem;margin-bottom:.4rem;line-height:1.3}
+        .bento-desc{font-size:.82rem;color:var(--tx2);line-height:1.6;flex:1}
+        .bento-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.85rem}
+        .bento-tag{
+            background:var(--bg3);color:var(--tx3);font-family:var(--m);
+            font-size:.62rem;padding:.15rem .5rem;border-radius:4px;
+        }
+
+        /* =========== LEADERSHIP =========== */
+        .lead-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+        .lead-card{
+            background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+            overflow:hidden;transition:transform .2s,box-shadow .2s;
+        }
+        .lead-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+        .lead-card-img{width:100%;max-height:300px;object-fit:cover;display:block;border-bottom:1px solid var(--bdr)}
+        .lead-card-body{padding:1.35rem}
+        .lead-org{font-weight:700;font-size:.95rem;margin-bottom:.15rem}
+        .lead-role{font-size:.82rem;color:var(--grn);font-weight:500;margin-bottom:.1rem}
+        .lead-date{font-family:var(--m);font-size:.68rem;color:var(--tx3);margin-bottom:.65rem}
+        .lead-desc{font-size:.82rem;color:var(--tx2);line-height:1.6}
+
+        .lead-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem}
+        .lead-row{
+            display:flex;justify-content:space-between;align-items:center;
+            padding:1rem 1.25rem;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+            transition:border-color .2s;
+        }
+        .lead-row:hover{border-color:var(--grn)}
+        .lead-row-left div:first-child{font-weight:600;font-size:.9rem}
+        .lead-row-left div:last-child{font-size:.78rem;color:var(--tx2)}
+        .lead-row-right{font-family:var(--m);font-size:.68rem;color:var(--tx3)}
+
+        /* =========== GLASS =========== */
+        .glass-bar{
+            display:flex;gap:0;border:1px solid var(--bdr);border-radius:var(--r);
+            overflow:hidden;margin-bottom:2rem;
+        }
+        .glass-seg{
+            flex:1;padding:1.15rem .75rem;text-align:center;
+            border-right:1px solid var(--bdr);
+            transition:background .2s;
+        }
+        .glass-seg:last-child{border-right:none}
+        .glass-seg:hover{background:var(--grn-dim)}
+        .glass-seg-name{font-weight:600;font-size:.78rem;margin-bottom:.2rem}
+        .glass-seg-desc{font-family:var(--m);font-size:.62rem;color:var(--tx3)}
+
+        .glass-focus{
+            background:var(--grn-dim);border:1px solid rgba(216,254,1,.2);
+            border-radius:var(--r);padding:1.5rem 1.75rem;
+        }
+        .glass-focus-lbl{font-family:var(--m);font-size:.68rem;color:var(--grn);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+        .glass-focus p{font-size:.9rem;color:var(--tx2);line-height:1.75}
+        .glass-focus strong{color:var(--tx)}
+
+        /* =========== CONTACT =========== */
+        .contact-cols{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+        .contact-text{font-size:.94rem;color:var(--tx2);line-height:1.8;margin-bottom:1.5rem}
+        .c-links{display:flex;flex-direction:column;gap:.65rem}
+        .c-link{
+            display:flex;align-items:center;gap:.85rem;
+            padding:1rem 1.25rem;background:var(--bg2);border:1px solid var(--bdr);
+            border-radius:var(--r);text-decoration:none;color:var(--tx);
+            transition:border-color .2s,transform .2s;
+        }
+        .c-link:hover{border-color:var(--grn);transform:translateX(4px)}
+        .c-link-icon{
+            width:36px;height:36px;background:var(--grn-dim);border-radius:8px;
+            display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+        }
+        .c-link-lbl{font-family:var(--m);font-size:.65rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em}
+        .c-link-val{font-weight:500;font-size:.88rem}
+
+        .contact-form{display:flex;flex-direction:column;gap:.75rem}
+        .cf-label{font-family:var(--m);font-size:.72rem;color:var(--tx3);margin-bottom:.2rem;display:block}
+        .cf-input,.cf-textarea{
+            background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;
+            padding:.7rem .9rem;font-family:var(--f);font-size:.85rem;color:var(--tx);
+            width:100%;outline:none;transition:border-color .2s;
+        }
+        .cf-input:focus,.cf-textarea:focus{border-color:var(--grn);box-shadow:0 0 0 3px rgba(216,254,1,.1)}
+        .cf-textarea{min-height:100px;resize:vertical}
+
+        /* =========== FOOTER =========== */
+        footer{
+            border-top:1px solid var(--bdr);
+            padding:1.75rem clamp(1.25rem,5vw,3rem);
+            display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+            font-family:var(--m);font-size:.7rem;color:var(--tx3);
+            position:relative;z-index:1;
+        }
+        footer a{color:var(--tx3);text-decoration:none;transition:color .2s}
+        footer a:hover{color:var(--grn)}
+        .flinks{display:flex;gap:1.5rem}
+
+        /* =========== ANIMATIONS =========== */
+        .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+        .reveal.vis{opacity:1;transform:none}
+
+        /* =========== RESPONSIVE =========== */
+        @media(max-width:900px){
+            #hero{grid-template-columns:1fr;text-align:left}
+            .hero-photo{width:200px;margin:0 auto 2rem;order:-1}
+            .about-cols{grid-template-columns:1fr}
+            .bento{grid-template-columns:1fr}
+            .bento-item.large{grid-column:span 1}
+            .lead-grid{grid-template-columns:1fr}
+            .contact-cols{grid-template-columns:1fr}
+            .glass-bar{flex-direction:column}
+            .glass-seg{border-right:none;border-bottom:1px solid var(--bdr)}
+            .glass-seg:last-child{border-bottom:none}
+        }
+        @media(max-width:600px){
+            .nlinks{
+                display:none;position:absolute;top:56px;left:0;right:0;
+                background:var(--bg);flex-direction:column;padding:1.25rem;gap:1rem;
+                border-bottom:1px solid var(--bdr);box-shadow:0 8px 30px rgba(0,0,0,.5);
+            }
+            .nlinks.open{display:flex}
+            .ntoggle{display:flex}
+            .sec,.sec-full{padding:4rem 1.25rem}
+            .img-break{height:260px}
+            .img-break .caption{left:1.25rem}
+            .hero-stats{gap:1.5rem}
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <a href="#hero" class="nlogo">mia<span>.andreu</span></a>
+    <ul class="nlinks" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#leadership">Leadership</a></li>
+        <li><a href="#glass">GLASS</a></li>
+        <li><a href="#contact" class="cta">Contact</a></li>
+    </ul>
+    <div class="ntoggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+    <div class="hero-text">
+        <div class="hero-label">Mechanical Engineering &middot; NYU Tandon '27</div>
+        <h1 class="hero-name">Mia<br><em>Andreu</em></h1>
+        <p class="hero-sub">
+            I study how energy moves through buildings and cities, then I figure out how to make it cleaner. Currently interning at WSP, previously launching rockets and designing LEED Platinum buildings.
+        </p>
+        <div class="hero-btns">
+            <a href="#projects" class="btn btn-g">See My Work</a>
+            <a href="#" class="btn btn-o" id="dlResume">Download CV</a>
+        </div>
+        <div class="hero-stats">
+            <div><div class="hs-val">3.9</div><div class="hs-lbl">GPA / 4.0</div></div>
+            <div><div class="hs-val">2+</div><div class="hs-lbl">Internships</div></div>
+            <div><div class="hs-val">8</div><div class="hs-lbl">Countries</div></div>
+            <div><div class="hs-val">'27</div><div class="hs-lbl">Graduation</div></div>
+        </div>
+    </div>
+    <div class="hero-photo">
+        <img src="images/headshot.png" alt="Mia Andreu">
+    </div>
+</section>
+
+<!-- SKILLS TICKER -->
+<div class="ticker-wrap">
+    <div class="ticker" id="ticker">
+        <span>AutoCAD</span><span class="dot">&bull;</span>
+        <span>SolidWorks</span><span class="dot">&bull;</span>
+        <span>Fusion 360</span><span class="dot">&bull;</span>
+        <span>BIM Revit</span><span class="dot">&bull;</span>
+        <span>Python</span><span class="dot">&bull;</span>
+        <span>MS Project</span><span class="dot">&bull;</span>
+        <span>3D Printing</span><span class="dot">&bull;</span>
+        <span>Bluebeam</span><span class="dot">&bull;</span>
+        <span>Open Rocket</span><span class="dot">&bull;</span>
+        <span>GAMA Platform</span><span class="dot">&bull;</span>
+        <span>Technical Writing</span><span class="dot">&bull;</span>
+        <span>Data Analysis</span><span class="dot">&bull;</span>
+        <span>LEED Standards</span><span class="dot">&bull;</span>
+        <span>ESG Frameworks</span><span class="dot">&bull;</span>
+        <!-- duplicate for seamless loop -->
+        <span>AutoCAD</span><span class="dot">&bull;</span>
+        <span>SolidWorks</span><span class="dot">&bull;</span>
+        <span>Fusion 360</span><span class="dot">&bull;</span>
+        <span>BIM Revit</span><span class="dot">&bull;</span>
+        <span>Python</span><span class="dot">&bull;</span>
+        <span>MS Project</span><span class="dot">&bull;</span>
+        <span>3D Printing</span><span class="dot">&bull;</span>
+        <span>Bluebeam</span><span class="dot">&bull;</span>
+        <span>Open Rocket</span><span class="dot">&bull;</span>
+        <span>GAMA Platform</span><span class="dot">&bull;</span>
+        <span>Technical Writing</span><span class="dot">&bull;</span>
+        <span>Data Analysis</span><span class="dot">&bull;</span>
+        <span>LEED Standards</span><span class="dot">&bull;</span>
+        <span>ESG Frameworks</span><span class="dot">&bull;</span>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+    <div class="sec-hdr reveal">
+        <div class="sec-num">01 About</div>
+        <h2 class="sec-t">The short version</h2>
+    </div>
+    <div class="about-cols">
+        <div class="about-text reveal">
+            <p>
+                I'm the oldest of three, and I've loved building things for as long as I can remember. Any puzzle laid out in front of me that I can work from start to finish is the most satisfying thing. That mix of art and problem-solving is what brought me to <strong>NYU Tandon</strong>, where I'm studying mechanical engineering with a focus on <strong>sustainable energy systems</strong>.
+            </p>
+            <p>
+                I've interned at <strong>WSP</strong> doing energy modeling for commercial buildings, validated <strong>$362K in energy savings</strong> at Piedmont Service Group, and helped design an award-winning <strong>LEED Platinum building</strong> in Revit. I've also built rocket fins for a NASA competition and traveled to Vietnam to model air quality solutions using digital twin simulations.
+            </p>
+            <p>
+                I've always been drawn to both math and art, and engineering is where the two meet. There's something deeply satisfying about a new challenge I can work from start to finish, where the creative and the technical aren't separate but the same thing. Finding this connection in the realm of energy, I am able to design solutions that are not only efficient, but also elegant and impactful.
+            </p>
+            <p>
+                When I'm not in the lab or on a job site, I'm probably knitting, lifting weights, or exploring a museum somewhere. Driven by a want to create, share what I make with others, and be a part of something larger than myself.
+            </p>
+        </div>
+        <div>
+            <div class="edu reveal">
+                <div class="edu-school">New York University</div>
+                <div class="edu-deg">B.S. Mechanical Engineering &middot; Tandon School of Engineering</div>
+                <div class="edu-meta">
+                    <span class="edu-gpa">3.9 / 4.0 &middot; Dean's List</span>
+                    <span class="edu-date">Expected May 2027</span>
+                </div>
+            </div>
+            <div class="edu reveal">
+                <div class="edu-school">Politecnico di Milano</div>
+                <div class="edu-deg">Study Abroad &middot; GLASS Program</div>
+                <div class="edu-meta">
+                    <span class="edu-gpa">Milan, Italy</span>
+                    <span class="edu-date">Spring 2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="sec">
+    <div class="sec-hdr reveal">
+        <div class="sec-num">02 Experience</div>
+        <h2 class="sec-t">Where I've worked</h2>
+        <p class="sec-sub">Click any role to expand details.</p>
+    </div>
+    <div class="exp-list">
+        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
+            <div>
+                <div class="exp-co">WSP</div>
+                <div class="exp-rl">Mechanical Engineering Energy Intern &middot; New York, NY</div>
+                <div class="exp-det">
+                    <ul>
+                        <li>Conducted field research and engineering analyses supporting energy optimization in 3+ client projects</li>
+                        <li>Created CAD drawings and technical design reports to streamline client communication and project workflows</li>
+                        <li>Assessed environmental risks and integrated sustainable solutions aligned with LEED and ESG standards</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-dt">Jun 2025 &ndash; Present</div>
+        </div>
+        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
+            <div>
+                <div class="exp-co">AIAA at NYU</div>
+                <div class="exp-rl">Secretary &middot; New York, NY</div>
+                <div class="exp-det">
+                    <ul>
+                        <li>Maintained chapter records, managed internal communications, and ensured smooth administrative operations</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-dt">Oct 2025 &ndash; Present</div>
+        </div>
+        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
+            <div>
+                <div class="exp-co">Rogue Aerospace &middot; NYU Tandon</div>
+                <div class="exp-rl">Dynamics Team Member &middot; Brooklyn, NY</div>
+                <div class="exp-det">
+                    <ul>
+                        <li>Engineered 3D-print and wooden fin prototypes, applying quantitative analysis to optimize flight stability</li>
+                        <li>Analyzed 8 fin configurations using Open Rocket simulations and hand calculations</li>
+                        <li>Contributed to a NASA Student Launch Initiative award-winning team</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-dt">Sep 2024 &ndash; Jan 2025</div>
+        </div>
+        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
+            <div>
+                <div class="exp-co">Piedmont Service Group</div>
+                <div class="exp-rl">Energy Sustainability Systems Intern &middot; Raleigh, NC</div>
+                <div class="exp-det">
+                    <ul>
+                        <li>Supported energy audits and site walkthroughs for Investment Grade Audits for commercial clients</li>
+                        <li>Built Excel models to validate $362K in projected energy savings</li>
+                        <li>Drafted Energy Savings Performance Contracts and capital expenditure documents</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-dt">Jun 2024 &ndash; Aug 2024</div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="sec">
+    <div class="sec-hdr reveal">
+        <div class="sec-num">03 Projects</div>
+        <h2 class="sec-t">Things I've built</h2>
+    </div>
+    <div class="bento">
+        <!-- HANOI - large featured -->
+        <a href="hanoi-digital-twin.html" class="bento-item large reveal" style="text-decoration:none;color:inherit">
+            <img class="bento-img" src="images/digital-twin.jpeg" alt="Presenting digital twin model for Hanoi air quality">
+            <div class="bento-body">
+                <div class="bento-badge">VinUniversity &middot; Hanoi, Vietnam</div>
+                <div class="bento-title">Modeling Air Quality Solutions in Hanoi</div>
+                <p class="bento-desc">
+                    Collaborated across disciplines and cultures to tackle traffic congestion and air quality in Hanoi. Our team visited multiple districts to observe traffic patterns firsthand, then used the GAMA platform and digital twin simulations to test an air quality improvement approach in a virtual environment before real-world implementation.
+                </p>
+                <div class="bento-tags">
+                    <span class="bento-tag">GAMA Platform</span>
+                    <span class="bento-tag">Digital Twin</span>
+                    <span class="bento-tag">Air Quality</span>
+                    <span class="bento-tag">Global Collaboration</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- LEED BUILDING -->
+        <a href="revit-building.html" class="bento-item reveal" style="text-decoration:none;color:inherit">
+            <img class="bento-img" src="images/revit-building(2).png" alt="The Andreu Building exterior facade rendering">
+            <div class="bento-body">
+                <div class="bento-badge">First Place, Nick Russo Award</div>
+                <div class="bento-title">LEED Platinum Building Design</div>
+                <p class="bento-desc">
+                    Designed "The Andreu Building," an 8-story LEED Platinum replacement for NYU Jacob's Academic Building. 100 dorms, 18 classrooms, full MEP systems, rooftop green space.
+                </p>
+                <div class="bento-tags">
+                    <span class="bento-tag">BIM Revit</span>
+                    <span class="bento-tag">LEED</span>
+                    <span class="bento-tag">MEP</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- ROCKET FINS -->
+        <div class="bento-item reveal">
+            <img class="bento-img" src="images/rocket-fins.jpg" alt="Rogue Aerospace team with rocket components">
+            <div class="bento-body">
+                <div class="bento-badge">NASA SLI Award Winner</div>
+                <div class="bento-title">Rocket Fin Optimization</div>
+                <p class="bento-desc">
+                    Analyzed 8 fin configurations via Open Rocket simulations and hand calculations. Engineered 3D-printed and wooden prototypes to optimize flight stability for competition.
+                </p>
+                <div class="bento-tags">
+                    <span class="bento-tag">Open Rocket</span>
+                    <span class="bento-tag">3D Printing</span>
+                    <span class="bento-tag">Aerodynamics</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LASER LAMP -->
+        <div class="bento-item reveal">
+            <img class="bento-img" src="images/Laser-lamp.jpg" alt="Laser lamp AutoCAD 3D model">
+            <div class="bento-body">
+                <div class="bento-title">Laser Lamp</div>
+                <p class="bento-desc">
+                    Designed and fabricated a lamp using laser-cut wooden ribs. An exploration of light diffusion, material properties, and the intersection of craft and precision engineering.
+                </p>
+                <div class="bento-tags">
+                    <span class="bento-tag">AutoCAD</span>
+                    <span class="bento-tag">Laser Cutting</span>
+                    <span class="bento-tag">Fabrication</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- WSP -->
+        <div class="bento-item reveal">
+            <img class="bento-img" src="images/wsp_energy.jpeg" alt="WSP energy systems 3D BIM model">
+            <div class="bento-body">
+                <div class="bento-title">WSP Energy Optimization</div>
+                <p class="bento-desc">
+                    Supporting energy analyses across 3+ client projects at one of the world's largest engineering firms. CAD drawings, technical reports, LEED and ESG-aligned solutions.
+                </p>
+                <div class="bento-tags">
+                    <span class="bento-tag">AutoCAD</span>
+                    <span class="bento-tag">LEED</span>
+                    <span class="bento-tag">ESG</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LEADERSHIP -->
+<section id="leadership" class="sec">
+    <div class="sec-hdr reveal">
+        <div class="sec-num">04 Leadership &amp; Service</div>
+        <h2 class="sec-t">Beyond the classroom</h2>
+    </div>
+
+    <div class="lead-grid">
+        <div class="lead-card reveal">
+            <img class="lead-card-img" src="images/swe.jpg" alt="Mia at SWE24 conference">
+            <div class="lead-card-body">
+                <div class="lead-org">Society of Women Engineers</div>
+                <div class="lead-role">SWE24 Conference Attendee &middot; Member</div>
+                <div class="lead-date">2023 &ndash; Present</div>
+                <p class="lead-desc">Active member supporting women in engineering through networking, mentorship, and professional development. Attended the national SWE24 conference.</p>
+            </div>
+        </div>
+        <div class="lead-card reveal">
+            <img class="lead-card-img" src="images/brooklyn-bodega.jpeg" alt="Volunteering at Brooklyn Book Bodega community event">
+            <div class="lead-card-body">
+                <div class="lead-org">Community Service</div>
+                <div class="lead-role">Brooklyn Book Bodega &middot; Volunteer</div>
+                <div class="lead-date">Brooklyn, NY</div>
+                <p class="lead-desc">Volunteered at community literacy events, engaging kids and families through hands-on creative activities in Brooklyn.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lead-list reveal">
+        <div class="lead-row">
+            <div class="lead-row-left">
+                <div>AIAA at NYU</div>
+                <div>Secretary &middot; American Institute of Aeronautics and Astronautics</div>
+            </div>
+            <div class="lead-row-right">Oct 2025 &ndash; Present</div>
+        </div>
+        <div class="lead-row">
+            <div class="lead-row-left">
+                <div>ASME at NYU</div>
+                <div>Member &middot; American Society of Mechanical Engineers</div>
+            </div>
+            <div class="lead-row-right">2023 &ndash; Present</div>
+        </div>
+        <div class="lead-row">
+            <div class="lead-row-left">
+                <div>Durham Children's Initiative</div>
+                <div>Tutor &amp; Volunteer &middot; Led 12 weeks of STEAM Saturdays for 30 K&ndash;8 students</div>
+            </div>
+            <div class="lead-row-right">Summer 2022</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GLASS -->
+<section id="glass" class="sec">
+    <div class="sec-hdr reveal">
+        <div class="sec-num">05 GLASS Scholar</div>
+        <h2 class="sec-t">Global Leaders and Scholars in STEM</h2>
+        <p class="sec-sub">Selected as 1 of 26 scholars &middot; Cohort 2025 &middot; NYU Tandon</p>
+    </div>
+
+    <div class="glass-bar reveal">
+        <div class="glass-seg">
+            <div class="glass-seg-name">Global</div>
+            <div class="glass-seg-desc">Milan &middot; Vietnam &middot; 8 countries</div>
+        </div>
+        <div class="glass-seg">
+            <div class="glass-seg-name">Service</div>
+            <div class="glass-seg-desc">STEAM tutoring &middot; community events</div>
+        </div>
+        <div class="glass-seg">
+            <div class="glass-seg-name">Leadership</div>
+            <div class="glass-seg-desc">AIAA Secretary &middot; team projects</div>
+        </div>
+        <div class="glass-seg">
+            <div class="glass-seg-name">Academic</div>
+            <div class="glass-seg-desc">3.9 GPA &middot; Dean's List</div>
+        </div>
+        <div class="glass-seg">
+            <div class="glass-seg-name">Professional</div>
+            <div class="glass-seg-desc">WSP &middot; Piedmont &middot; VinUni</div>
+        </div>
+    </div>
+
+    <div class="reveal" style="display:flex;gap:1.5rem;margin-bottom:2rem;justify-content:center">
+        <img src="images/GLASS(1).JPG" alt="GLASS Scholar cohort presentation event" style="width:42%;border-radius:var(--r);border:1px solid var(--bdr);display:block;object-fit:cover">
+        <img src="images/GLASS2.JPG" alt="GLASS Scholars cohort gathering" style="width:42%;border-radius:var(--r);border:1px solid var(--bdr);display:block;object-fit:cover">
+    </div>
+
+    <div class="glass-focus reveal">
+        <div class="glass-focus-lbl">Global Focus Area</div>
+        <p>
+            My global challenge centers on <strong>sustainable energy systems</strong>, exploring how engineering innovation can democratize access to clean energy, reduce emissions, and create equitable climate solutions. My work at WSP and Piedmont Service Group showed me how much energy is wasted in commercial buildings. Studying abroad in Milan and collaborating in Vietnam taught me that solutions have to be designed <em>with</em> communities, not just <em>for</em> them.
+        </p>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+    <div class="sec-hdr reveal">
+        <div class="sec-num">06 Contact</div>
+        <h2 class="sec-t">Let's connect</h2>
+    </div>
+    <div class="contact-cols">
+        <div>
+            <p class="contact-text reveal">
+                I'm always interested in hearing about new opportunities, collaborations, or interesting problems to solve. Whether it's an internship, research, or just a conversation about sustainable engineering, reach out.
+            </p>
+            <div class="c-links reveal">
+                <a href="mailto:mia.andreu@outlook.com" class="c-link">
+                    <div class="c-link-icon">&#9993;</div>
+                    <div>
+                        <div class="c-link-lbl">Email</div>
+                        <div class="c-link-val">mia.andreu@outlook.com</div>
+                    </div>
+                </a>
+                <a href="https://linkedin.com/in/miaandreu" target="_blank" rel="noopener" class="c-link">
+                    <div class="c-link-icon">&#128279;</div>
+                    <div>
+                        <div class="c-link-lbl">LinkedIn</div>
+                        <div class="c-link-val">linkedin.com/in/miaandreu</div>
+                    </div>
+                </a>
+                <div class="c-link" style="cursor:default">
+                    <div class="c-link-icon">&#128205;</div>
+                    <div>
+                        <div class="c-link-lbl">Location</div>
+                        <div class="c-link-val">Brooklyn, New York</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="reveal">
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+                <div><label class="cf-label" for="name">Name</label><input class="cf-input" type="text" id="name" placeholder="Your name" required></div>
+                <div><label class="cf-label" for="email">Email</label><input class="cf-input" type="email" id="email" placeholder="your@email.com" required></div>
+                <div><label class="cf-label" for="message">Message</label><textarea class="cf-textarea" id="message" placeholder="What's on your mind?" required></textarea></div>
+                <button type="submit" class="btn btn-g" style="width:100%;justify-content:center;font-family:var(--f)">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>&copy; 2025 Mia Andreu</p>
+    <div class="flinks">
+        <a href="#hero">Top</a>
+        <a href="https://linkedin.com/in/miaandreu" target="_blank">LinkedIn</a>
+        <a href="mailto:mia.andreu@outlook.com">Email</a>
+    </div>
+</footer>
+
+<script>
+// Mobile nav
+document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+document.querySelectorAll('.nlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+
+// Nav shadow + scroll spy
+const nav=document.getElementById('navbar'),secs=document.querySelectorAll('section[id]'),navAs=document.querySelectorAll('.nlinks a:not(.cta)');
+window.addEventListener('scroll',()=>{
+    nav.classList.toggle('scrolled',scrollY>10);
+    let cur='';
+    secs.forEach(s=>{if(scrollY>=s.offsetTop-120)cur=s.id});
+    navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+// Reveal on scroll
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Form
+function handleSubmit(e){
+    e.preventDefault();
+    const b=e.target.querySelector('button');
+    b.textContent='\u2713 Sent!';b.style.background='#059669';b.style.color='#fff';
+    setTimeout(()=>{b.textContent='Send Message';b.style.background='';b.style.color='';e.target.reset()},2500);
+}
+</script>
+
+</body>
+</html>

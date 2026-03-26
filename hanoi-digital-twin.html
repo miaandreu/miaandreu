@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanoi Air Quality Digital Twin | Mia Andreu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#1E1E1E;--bg2:#252526;--bg3:#2D2D2D;
+            --tx:#FFFFFF;--tx2:#BBBBBB;--tx3:#707070;
+            --grn:#D8FE01;--grn-dim:rgba(216,254,1,.07);--grn-mid:rgba(216,254,1,.18);
+            --bdr:#2E2E2E;--r:10px;
+            --f:'Inter',system-ui,sans-serif;--m:'JetBrains Mono',monospace;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+        /* Nav */
+        nav{
+            position:fixed;top:0;left:0;right:0;height:56px;
+            background:rgba(30,30,30,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+            border-bottom:1px solid var(--bdr);z-index:100;
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 clamp(1.25rem,5vw,3rem);
+        }
+        .nlogo{font-family:var(--m);font-size:.85rem;font-weight:600;color:var(--tx);text-decoration:none}
+        .nlogo span{color:var(--grn)}
+        .back{font-size:.78rem;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+        .back:hover{color:var(--grn)}
+
+        /* Hero */
+        .hero-img{
+            width:100%;max-height:500px;object-fit:cover;display:block;
+            margin-top:56px;border-bottom:1px solid var(--bdr);
+        }
+
+        /* Content */
+        .content{max-width:860px;margin:0 auto;padding:3rem clamp(1.25rem,5vw,3rem) 5rem}
+        .badge{
+            display:inline-block;background:var(--grn-dim);color:var(--grn);border:1px solid var(--grn-mid);
+            font-family:var(--m);font-size:.65rem;font-weight:600;
+            padding:.2rem .65rem;border-radius:100px;
+            text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem;
+        }
+        h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:.75rem}
+        .meta{font-family:var(--m);font-size:.75rem;color:var(--tx3);margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:1.5rem}
+        .meta span{display:flex;align-items:center;gap:.35rem}
+
+        .prose{margin-bottom:2.5rem}
+        .prose h2{font-size:1.2rem;font-weight:700;margin-bottom:.75rem;margin-top:2.5rem;color:var(--tx)}
+        .prose h2:first-child{margin-top:0}
+        .prose p{font-size:.92rem;color:var(--tx2);line-height:1.85;margin-bottom:1rem}
+        .prose ul{list-style:none;margin-bottom:1rem}
+        .prose li{
+            font-size:.88rem;color:var(--tx2);line-height:1.7;
+            padding-left:1.2rem;position:relative;margin-bottom:.4rem;
+        }
+        .prose li::before{content:'\2192';position:absolute;left:0;color:var(--grn);font-size:.78rem}
+        .prose strong{color:var(--tx);font-weight:600}
+        .prose em{color:var(--grn);font-style:normal;font-weight:600}
+
+        /* Image grid */
+        .img-full{width:100%;border-radius:var(--r);border:1px solid var(--bdr);margin:1.5rem 0;display:block}
+        .img-caption{font-family:var(--m);font-size:.68rem;color:var(--tx3);margin-top:-.75rem;margin-bottom:1.5rem}
+
+        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+        .two-col img{width:100%;border-radius:var(--r);border:1px solid var(--bdr);display:block}
+        @media(max-width:600px){.two-col{grid-template-columns:1fr}}
+
+        /* Scenarios */
+        .scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+        .scenario{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem;text-align:center}
+        .scenario-name{font-weight:700;font-size:.9rem;margin-bottom:.3rem}
+        .scenario-aqi{font-family:var(--m);font-size:1.5rem;font-weight:700;color:var(--grn);margin-bottom:.25rem}
+        .scenario-rank{font-family:var(--m);font-size:.7rem;color:var(--tx3);margin-bottom:.5rem}
+        .scenario-desc{font-size:.78rem;color:var(--tx2);line-height:1.5}
+        @media(max-width:600px){.scenarios{grid-template-columns:1fr}}
+
+        /* Team */
+        .team{display:flex;gap:1.5rem;margin:1.5rem 0;flex-wrap:wrap}
+        .team-member{font-size:.82rem;color:var(--tx2)}
+        .team-member strong{color:var(--tx);display:block;font-size:.88rem}
+
+        /* Findings */
+        .findings{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0}
+        .finding-col h3{font-size:.9rem;font-weight:700;margin-bottom:.65rem;color:var(--grn)}
+        @media(max-width:600px){.findings{grid-template-columns:1fr}}
+
+        /* Callout */
+        .callout{
+            background:var(--grn-dim);border:1px solid rgba(216,254,1,.2);
+            border-radius:var(--r);padding:1.25rem 1.5rem;margin:1.5rem 0;
+        }
+        .callout p{font-size:.88rem;color:var(--tx2);line-height:1.7;margin:0}
+        .callout strong{color:var(--tx)}
+
+        /* Tags */
+        .tags{display:flex;flex-wrap:wrap;gap:.35rem;margin:1.5rem 0}
+        .tag{background:var(--bg3);color:var(--tx3);font-family:var(--m);font-size:.65rem;padding:.2rem .55rem;border-radius:4px}
+
+        /* Footer */
+        footer{
+            border-top:1px solid var(--bdr);padding:1.5rem clamp(1.25rem,5vw,3rem);
+            font-family:var(--m);font-size:.7rem;color:var(--tx3);
+            display:flex;justify-content:space-between;align-items:center;
+        }
+        footer a{color:var(--tx3);text-decoration:none;transition:color .2s}
+        footer a:hover{color:var(--grn)}
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nlogo">mia<span>.andreu</span></a>
+    <a href="index.html#projects" class="back">&larr; Back to projects</a>
+</nav>
+
+<img class="hero-img" src="images/vietnam-page-header.JPG" alt="Hanoi, Vietnam">
+
+<div class="content">
+    <div class="badge">VinUniversity &middot; Hanoi, Vietnam</div>
+    <h1>Digital Twin for Intersection Throughput and Air Pollution in Hanoi</h1>
+    <div class="meta">
+        <span>Team of 4</span>
+        <span>GAMA Platform</span>
+        <span>VinUniversity</span>
+        <span>Global Collaboration</span>
+    </div>
+
+    <div class="prose">
+        <h2>Overview</h2>
+        <p>
+            At VinUniversity's College of Engineering and Computer Science, our team collaborated across disciplines and cultures to tackle a real-world challenge: traffic congestion and air quality at one of Hanoi's busiest intersections. We combined engineering analysis, computational tools, and on-the-ground observations to understand how transportation behavior and urban infrastructure shape daily conditions across the city.
+        </p>
+        <p>
+            We visited multiple districts to observe traffic patterns firsthand, then used those insights to propose an air quality improvement approach. Using the <strong>GAMA platform</strong> and <strong>digital twin simulations</strong>, we tested our ideas in a virtual environment to estimate impacts and evaluate effectiveness before real-world implementation.
+        </p>
+
+        <h2>The Team</h2>
+        <div class="team">
+            <div class="team-member"><strong>Mia Andreu</strong>Mechanical Engineering</div>
+            <div class="team-member"><strong>Oswaldo Soriano</strong>Mechanical Engineering</div>
+            <div class="team-member"><strong>Guarien Barone Jr.</strong>Computer Engineering</div>
+            <div class="team-member"><strong>Vu Huong Ngan</strong>Disaster Risk</div>
+        </div>
+
+        <h2>On the Ground in Hanoi</h2>
+    </div>
+
+    <div class="two-col">
+        <img src="images/traffic_vietnam.jpeg" alt="Team in Vietnam observing traffic patterns">
+        <img src="images/vietnam_traffic.jpeg" alt="Aerial view of Hanoi intersection with motorbikes and lane dividers">
+    </div>
+
+    <div class="prose">
+        <h2>Why This Intersection</h2>
+        <p>
+            We focused on the <strong>Ch&ugrave;a B&#7897;c Street intersection</strong>,a high-density, mixed-traffic environment common in central Hanoi. This intersection represents the kind of chaotic, unstructured traffic flow that makes air quality improvement so challenging in Southeast Asian cities.
+        </p>
+        <ul>
+            <li>Motorbikes dominate traffic and move flexibly across available space, not fixed lanes</li>
+            <li>Mixed vehicle types compete for the same road space</li>
+            <li>Buses face repeated interruptions, reducing schedule reliability</li>
+            <li>Pedestrian crossings add stop-and-go waves, resulting in inconsistent flow</li>
+            <li>Congestion is driven by interaction intensity, not signal timing alone</li>
+        </ul>
+
+        <h2>Scientific Questions</h2>
+        <p>Our research centered on two key questions:</p>
+        <ul>
+            <li><strong>How would dedicated bus lanes impact motorcycle usage and public transportation efficiency?</strong></li>
+            <li><strong>Which vehicle types contribute most to air pollution, and how can this inform targeted policy interventions?</strong></li>
+        </ul>
+
+        <h2>The Digital Twin Model</h2>
+        <p>
+            We built an agent-based simulation using the GAMA platform that models vehicles (cars, motorbikes, buses, pedestrians), road infrastructure (lanes, traffic lights, bus stops), and traffic police compliance. Each vehicle type has unique properties,speed, lane behavior, emission rates,and the model tracks a cumulative <em>AQI metric</em> to measure air quality changes relative to a baseline scenario where no lane separation exists.
+        </p>
+
+        <h2>GAMA Simulation</h2>
+    </div>
+
+    <video style="width:100%;border-radius:var(--r);border:1px solid var(--bdr);margin-bottom:.5rem" src="images/GAMA_video-1.mov" autoplay loop muted playsinline></video>
+    <p class="img-caption" style="text-align:center;margin-bottom:1.5rem">Agent-based traffic simulation running in the GAMA platform</p>
+
+    <div class="prose">
+        <h2>Three Scenarios Tested</h2>
+    </div>
+
+    <div class="scenarios">
+        <div class="scenario">
+            <div class="scenario-name">Three Separate Lanes</div>
+            <div class="scenario-aqi">~100</div>
+            <div class="scenario-rank">Best option</div>
+            <div class="scenario-desc">Defined lanes for all three vehicle types to reduce congestion and mixed-traffic interactions.</div>
+        </div>
+        <div class="scenario">
+            <div class="scenario-name">Low Compliance</div>
+            <div class="scenario-aqi">~105</div>
+            <div class="scenario-rank">Second best</div>
+            <div class="scenario-desc">Bus lanes exist but motorbikes still enter,heavy heterogeneity. Still outperformed bus-only lanes.</div>
+        </div>
+        <div class="scenario">
+            <div class="scenario-name">Bus Lane Only</div>
+            <div class="scenario-aqi">~130</div>
+            <div class="scenario-rank">Third best</div>
+            <div class="scenario-desc">Outer-road dedicated lane for EV public transit only. Unexpectedly increased congestion elsewhere.</div>
+        </div>
+    </div>
+
+    <div class="prose">
+        <p style="font-size:.82rem;color:var(--tx3);text-align:center;margin-bottom:2rem">
+            All scenarios compared against baseline model (AQI ~200) where no lane separation exists.
+        </p>
+
+        <h2>Key Findings &amp; Policy Implications</h2>
+    </div>
+
+    <div class="findings">
+        <div class="finding-col">
+            <h3>Key Findings</h3>
+            <ul style="list-style:none;padding:0">
+                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Bus-only lanes <strong style="color:var(--tx)">increased congestion</strong> and worsened air quality,opposite of our hypothesis</li>
+                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>The main pollution driver was <strong style="color:var(--tx)">stop-and-go traffic</strong> from mixed vehicle interactions</li>
+                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Traffic flow changes reduced emissions <strong style="color:var(--tx)">without relying on electrification or vehicle bans</strong></li>
+            </ul>
+        </div>
+        <div class="finding-col">
+            <h3>Policy Implications</h3>
+            <ul style="list-style:none;padding:0">
+                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Separating lanes improves flow even when compliance is imperfect</li>
+                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Enforcement is needed to sustain benefits over time</li>
+                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Pilot by corridor first to improve air quality while maintaining access</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="callout">
+        <p>
+            <strong>Conclusion:</strong> Improving air quality at congested intersections is best achieved through a sequence of targeted, evidence-based interventions guided by digital twin simulation,rather than a single sweeping fix. Even imperfect compliance with lane separation produced meaningful AQI improvements compared to the status quo.
+        </p>
+    </div>
+
+    <div class="tags">
+        <span class="tag">GAMA Platform</span>
+        <span class="tag">Digital Twin</span>
+        <span class="tag">Agent-Based Modeling</span>
+        <span class="tag">Air Quality</span>
+        <span class="tag">Urban Planning</span>
+        <span class="tag">Traffic Simulation</span>
+        <span class="tag">Vietnam</span>
+        <span class="tag">VinUniversity</span>
+        <span class="tag">Global Collaboration</span>
+    </div>
+</div>
+
+<footer>
+    <span>&copy; 2025 Mia Andreu</span>
+    <a href="index.html">Home</a>
+</footer>
+
+</body>
+</html>

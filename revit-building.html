@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Andreu Building | Mia Andreu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#1E1E1E;--bg2:#252526;--bg3:#2D2D2D;
+            --tx:#FFFFFF;--tx2:#BBBBBB;--tx3:#707070;
+            --grn:#D8FE01;--grn-dim:rgba(216,254,1,.07);--grn-mid:rgba(216,254,1,.18);
+            --bdr:#2E2E2E;--r:10px;
+            --f:'Inter',system-ui,sans-serif;--m:'JetBrains Mono',monospace;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+        /* Nav */
+        nav{
+            position:fixed;top:0;left:0;right:0;height:56px;
+            background:rgba(30,30,30,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+            border-bottom:1px solid var(--bdr);z-index:100;
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 clamp(1.25rem,5vw,3rem);
+        }
+        .nlogo{font-family:var(--m);font-size:.85rem;font-weight:600;color:var(--tx);text-decoration:none}
+        .nlogo span{color:var(--grn)}
+        .back{font-size:.78rem;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+        .back:hover{color:var(--grn)}
+
+        /* Hero */
+        .hero-img{
+            width:100%;max-height:500px;object-fit:cover;display:block;
+            margin-top:56px;border-bottom:1px solid var(--bdr);
+        }
+
+        /* Content */
+        .content{max-width:860px;margin:0 auto;padding:3rem clamp(1.25rem,5vw,3rem) 5rem}
+        .badge{
+            display:inline-block;background:var(--grn-dim);color:var(--grn);border:1px solid var(--grn-mid);
+            font-family:var(--m);font-size:.65rem;font-weight:600;
+            padding:.2rem .65rem;border-radius:100px;
+            text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem;
+        }
+        h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:.75rem}
+        .meta{font-family:var(--m);font-size:.75rem;color:var(--tx3);margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:1.5rem}
+        .meta span{display:flex;align-items:center;gap:.35rem}
+
+        .prose{margin-bottom:2.5rem}
+        .prose h2{font-size:1.2rem;font-weight:700;margin-bottom:.75rem;margin-top:2.5rem;color:var(--tx)}
+        .prose h2:first-child{margin-top:0}
+        .prose p{font-size:.92rem;color:var(--tx2);line-height:1.85;margin-bottom:1rem}
+        .prose ul{list-style:none;margin-bottom:1rem}
+        .prose li{
+            font-size:.88rem;color:var(--tx2);line-height:1.7;
+            padding-left:1.2rem;position:relative;margin-bottom:.4rem;
+        }
+        .prose li::before{content:'\2192';position:absolute;left:0;color:var(--grn);font-size:.78rem}
+        .prose strong{color:var(--tx);font-weight:600}
+        .prose em{color:var(--grn);font-style:normal;font-weight:600}
+
+        /* Image grid */
+        .img-full{width:100%;border-radius:var(--r);border:1px solid var(--bdr);margin:1.5rem 0;display:block}
+        .img-caption{font-family:var(--m);font-size:.68rem;color:var(--tx3);margin-top:-.75rem;margin-bottom:1.5rem}
+
+        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+        .two-col img{width:100%;border-radius:var(--r);border:1px solid var(--bdr);display:block}
+        @media(max-width:600px){.two-col{grid-template-columns:1fr}}
+
+        /* Stats */
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+        .stat{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem;text-align:center}
+        .stat-value{font-family:var(--m);font-size:1.5rem;font-weight:700;color:var(--grn);margin-bottom:.25rem}
+        .stat-label{font-size:.78rem;color:var(--tx2);line-height:1.5}
+        @media(max-width:600px){.stats{grid-template-columns:1fr}}
+
+        /* LEED features */
+        .features{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+        .feature{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:1.15rem 1.25rem}
+        .feature-name{font-weight:700;font-size:.88rem;margin-bottom:.3rem;color:var(--tx)}
+        .feature-desc{font-size:.78rem;color:var(--tx2);line-height:1.6}
+        @media(max-width:600px){.features{grid-template-columns:1fr}}
+
+        /* Team */
+        .team{display:flex;gap:1.5rem;margin:1.5rem 0;flex-wrap:wrap}
+        .team-member{font-size:.82rem;color:var(--tx2)}
+        .team-member strong{color:var(--tx);display:block;font-size:.88rem}
+
+        /* Callout */
+        .callout{
+            background:var(--grn-dim);border:1px solid rgba(216,254,1,.2);
+            border-radius:var(--r);padding:1.25rem 1.5rem;margin:1.5rem 0;
+        }
+        .callout p{font-size:.88rem;color:var(--tx2);line-height:1.7;margin:0}
+        .callout strong{color:var(--tx)}
+
+        /* Tags */
+        .tags{display:flex;flex-wrap:wrap;gap:.35rem;margin:1.5rem 0}
+        .tag{background:var(--bg3);color:var(--tx3);font-family:var(--m);font-size:.65rem;padding:.2rem .55rem;border-radius:4px}
+
+        /* Footer */
+        footer{
+            border-top:1px solid var(--bdr);padding:1.5rem clamp(1.25rem,5vw,3rem);
+            font-family:var(--m);font-size:.7rem;color:var(--tx3);
+            display:flex;justify-content:space-between;align-items:center;
+        }
+        footer a{color:var(--tx3);text-decoration:none;transition:color .2s}
+        footer a:hover{color:var(--grn)}
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nlogo">mia<span>.andreu</span></a>
+    <a href="index.html#projects" class="back">&larr; Back to projects</a>
+</nav>
+
+<img class="hero-img" src="images/revit-building(2).png" alt="The Andreu Building,Exterior Facade Rendering">
+
+<div class="content">
+    <div class="badge">NYU Tandon &middot; Revit &middot; LEED Platinum</div>
+    <h1>The Andreu Building: Reconstructing Jacobs Hall as a Sustainable Campus Hub</h1>
+    <div class="meta">
+        <span>Team of 3</span>
+        <span>Autodesk Revit</span>
+        <span>$28M Budget</span>
+        <span>LEED Platinum</span>
+    </div>
+
+    <div class="prose">
+        <h2>Overview</h2>
+        <p>
+            As Project Manager for <strong>Doing Modern Design</strong>, I led a team of three in reimagining NYU's Jacobs Administration Building as a sustainable, technology-forward campus facility. Our mission was to innovate the city with a healthy relationship between technology and the environment,proving that high-performance sustainable design doesn't have to come with a billion-dollar price tag.
+        </p>
+        <p>
+            Using <strong>Autodesk Revit</strong>, we designed a complete building reconstruction targeting <em>LEED Platinum</em> certification. Every design decision balanced environmental performance, occupant wellness, and financial feasibility,delivering a $28 million project that stands in sharp contrast to comparable projects like NYU's $1.2 billion Paulson Center.
+        </p>
+
+        <h2>The Team</h2>
+        <div class="team">
+            <div class="team-member"><strong>Mia Andreu</strong>Project Manager</div>
+            <div class="team-member"><strong>David Palma</strong>Head of Design</div>
+            <div class="team-member"><strong>Dereck Soto</strong>Head of Analytics</div>
+        </div>
+
+        <h2>Project Objective</h2>
+        <p>
+            Reconstruct the Jacobs Administration Building into a sustainable campus hub that integrates green building strategies, smart technology systems, and community-oriented spaces,all while achieving LEED Platinum certification and maintaining a realistic budget.
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value">$28M</div>
+            <div class="stat-label">Total Project Cost</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">LEED Pt</div>
+            <div class="stat-label">Platinum Certification</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Sustainability Systems</div>
+        </div>
+    </div>
+
+    <div class="prose">
+        <h2>LEED Platinum Features</h2>
+    </div>
+
+    <div class="features">
+        <div class="feature">
+            <div class="feature-name">Solar Heat Gain Windows</div>
+            <div class="feature-desc">High-performance glazing that reduces cooling loads while maximizing natural daylight throughout the building.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Smart LED Lighting</div>
+            <div class="feature-desc">Occupancy-sensing LED systems that adapt to usage patterns, reducing energy consumption across all floors.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Reusable Rainwater System</div>
+            <div class="feature-desc">Integrated rainwater collection and filtration for landscape irrigation and non-potable building use.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Heat Island Reduction</div>
+            <div class="feature-desc">Green roof systems and high-albedo materials that lower surrounding temperatures and reduce urban heat island effects.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Advanced Security</div>
+            <div class="feature-desc">Modern access control and monitoring systems integrated into the building's smart infrastructure.</div>
+        </div>
+        <div class="feature">
+            <div class="feature-name">Transportation Friendly</div>
+            <div class="feature-desc">Bike storage, EV charging stations, and proximity to public transit to encourage low-emission commuting.</div>
+        </div>
+    </div>
+
+    <div class="prose">
+        <h2>Design Highlights</h2>
+        <p>
+            Beyond meeting LEED requirements, we designed the building to serve as a true campus destination. The ground floor includes a <strong>vendor leasing area</strong> and <strong>caf&eacute;</strong> to activate the street level, while upper floors feature <strong>open collaborative areas</strong> and <strong>green space technology</strong> that bring nature into the workspace.
+        </p>
+    </div>
+
+    <img src="images/revit-building.png" alt="The Andreu Building full project poster" style="width:100%;height:auto;border-radius:var(--r);border:1px solid var(--bdr);margin:1.5rem 0;display:block">
+    <p class="img-caption" style="text-align:center">Full project poster , The Andreu Building</p>
+
+    <div class="prose">
+        <h2>Cost Comparison</h2>
+        <p>
+            One of the most compelling aspects of this project is its financial feasibility. At <em>$28 million</em>, the Andreu Building demonstrates that sustainable, LEED Platinum design can be achieved at a fraction of the cost of comparable institutional projects. For context, NYU's John A. Paulson Center,a similar-scale campus building,carried a price tag of <strong>$1.2 billion</strong>.
+        </p>
+        <p>
+            This wasn't about cutting corners. It was about making smarter design choices: prioritizing passive strategies like solar heat gain management, selecting materials with long life cycles, and integrating systems that reduce operating costs over the building's lifetime.
+        </p>
+
+        <h2>What I Learned</h2>
+        <ul>
+            <li>How to manage scope, timeline, and team roles as a <strong>Project Manager</strong> on a technical design project</li>
+            <li>The real tradeoffs between sustainability features and budget constraints</li>
+            <li>How to use <strong>Revit</strong> for architectural modeling, MEP coordination, and design visualization</li>
+            <li>That LEED certification is a framework for <strong>systematic decision-making</strong>, not just a checklist</li>
+            <li>How to present technical work to non-technical stakeholders in a compelling way</li>
+        </ul>
+    </div>
+
+    <div class="callout">
+        <p>
+            <strong>Takeaway:</strong> Sustainable building design is not a luxury,it's a design discipline. By treating LEED Platinum as a constraint rather than an add-on, we proved that high-performance buildings can be cost-effective, occupant-friendly, and environmentally responsible at the same time.
+        </p>
+    </div>
+
+    <div class="tags">
+        <span class="tag">Autodesk Revit</span>
+        <span class="tag">LEED Platinum</span>
+        <span class="tag">Sustainable Design</span>
+        <span class="tag">Building Information Modeling</span>
+        <span class="tag">Green Building</span>
+        <span class="tag">Project Management</span>
+        <span class="tag">NYU Tandon</span>
+        <span class="tag">MEP Systems</span>
+    </div>
+</div>
+
+<footer>
+    <span>&copy; 2025 Mia Andreu</span>
+    <a href="index.html">Home</a>
+</footer>
+
+</body>
+</html>
