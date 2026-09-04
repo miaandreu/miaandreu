@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Lamp | Mia Andreu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#1E1E1E;--bg2:#252526;--bg3:#2D2D2D;
+            --tx:#FFFFFF;--tx2:#BBBBBB;--tx3:#707070;
+            --grn:#D8FE01;--grn-dim:rgba(216,254,1,.07);--grn-mid:rgba(216,254,1,.18);
+            --bdr:#2E2E2E;--r:10px;
+            --f:'Inter',system-ui,sans-serif;--m:'JetBrains Mono',monospace;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+        /* Nav */
+        nav{
+            position:fixed;top:0;left:0;right:0;height:56px;
+            background:rgba(30,30,30,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+            border-bottom:1px solid var(--bdr);z-index:100;
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 clamp(1.25rem,5vw,3rem);
+        }
+        .nlogo{font-family:var(--m);font-size:.85rem;font-weight:600;color:var(--tx);text-decoration:none}
+        .nlogo span{color:var(--grn)}
+        .back{font-size:.78rem;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+        .back:hover{color:var(--grn)}
+
+        /* Hero */
+        .hero-img{
+            width:100%;max-height:500px;object-fit:cover;display:block;
+            margin-top:56px;border-bottom:1px solid var(--bdr);
+        }
+
+        /* Content */
+        .content{max-width:860px;margin:0 auto;padding:3rem clamp(1.25rem,5vw,3rem) 5rem}
+        .badge{
+            display:inline-block;background:var(--grn-dim);color:var(--grn);border:1px solid var(--grn-mid);
+            font-family:var(--m);font-size:.65rem;font-weight:600;
+            padding:.2rem .65rem;border-radius:100px;
+            text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem;
+        }
+        h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:.75rem}
+        .meta{font-family:var(--m);font-size:.75rem;color:var(--tx3);margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:1.5rem}
+        .meta span{display:flex;align-items:center;gap:.35rem}
+
+        .prose{margin-bottom:2.5rem}
+        .prose h2{font-size:1.2rem;font-weight:700;margin-bottom:.75rem;margin-top:2.5rem;color:var(--tx)}
+        .prose h2:first-child{margin-top:0}
+        .prose p{font-size:.92rem;color:var(--tx2);line-height:1.85;margin-bottom:1rem}
+        .prose ul{list-style:none;margin-bottom:1rem}
+        .prose li{
+            font-size:.88rem;color:var(--tx2);line-height:1.7;
+            padding-left:1.2rem;position:relative;margin-bottom:.4rem;
+        }
+        .prose li::before{content:'\2192';position:absolute;left:0;color:var(--grn);font-size:.78rem}
+        .prose strong{color:var(--tx);font-weight:600}
+        .prose em{color:var(--grn);font-style:normal;font-weight:600}
+
+        /* Image grid */
+        .img-full{width:100%;border-radius:var(--r);border:1px solid var(--bdr);margin:1.5rem 0;display:block}
+        .img-caption{font-family:var(--m);font-size:.68rem;color:var(--tx3);margin-top:-.75rem;margin-bottom:1.5rem}
+
+        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+        .two-col img,.two-col video{width:100%;border-radius:var(--r);border:1px solid var(--bdr);display:block}
+        @media(max-width:600px){.two-col{grid-template-columns:1fr}}
+
+        /* Stats */
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+        .stat{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem;text-align:center}
+        .stat-value{font-family:var(--m);font-size:1.5rem;font-weight:700;color:var(--grn);margin-bottom:.25rem}
+        .stat-label{font-size:.78rem;color:var(--tx2);line-height:1.5}
+        @media(max-width:600px){.stats{grid-template-columns:1fr}}
+
+        /* Callout */
+        .callout{
+            background:var(--grn-dim);border:1px solid rgba(216,254,1,.2);
+            border-radius:var(--r);padding:1.25rem 1.5rem;margin:1.5rem 0;
+        }
+        .callout p{font-size:.88rem;color:var(--tx2);line-height:1.7;margin:0}
+        .callout strong{color:var(--tx)}
+
+        /* Tags */
+        .tags{display:flex;flex-wrap:wrap;gap:.35rem;margin:1.5rem 0}
+        .tag{background:var(--bg3);color:var(--tx3);font-family:var(--m);font-size:.65rem;padding:.2rem .55rem;border-radius:4px}
+
+        /* Footer */
+        footer{
+            border-top:1px solid var(--bdr);padding:1.5rem clamp(1.25rem,5vw,3rem);
+            font-family:var(--m);font-size:.7rem;color:var(--tx3);
+            display:flex;justify-content:space-between;align-items:center;
+        }
+        footer a{color:var(--tx3);text-decoration:none;transition:color .2s}
+        footer a:hover{color:var(--grn)}
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nlogo">mia<span>.andreu</span></a>
+    <a href="index.html#projects" class="back">&larr; Back to projects</a>
+</nav>
+
+<img class="hero-img" src="images/Laser-lamp.jpg" alt="Illuminated laser-cut acrylic lamp">
+
+<div class="content">
+    <div class="badge">Solo Project &middot; AutoCAD &middot; Laser Cutting</div>
+    <h1>Laser Lamp: Diffusing Light Through Repeated Acrylic Ribs</h1>
+    <div class="meta">
+        <span>Solo Project</span>
+        <span>AutoCAD</span>
+        <span>Laser-Cut Acrylic</span>
+        <span>12&Prime; &times; 8&Prime;</span>
+    </div>
+
+    <div class="prose">
+        <h2>Overview</h2>
+        <p>
+            I designed and fabricated this lamp on my own, from CAD model to final assembly. The structure is built from two fit pieces and twenty repeated leg pieces that slot into them, all laser-cut from acrylic. The repeated legs diffuse the light and give the lamp its shape,an exploration of how a single repeated part, cut with precision, can build something structural and organic at the same time.
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value">12&Prime;</div>
+            <div class="stat-label">Height</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">8&Prime;</div>
+            <div class="stat-label">Width</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">22</div>
+            <div class="stat-label">Total Pieces &middot; 2 Fit Pieces + 20 Legs</div>
+        </div>
+    </div>
+
+    <div class="prose">
+        <h2>Design &amp; Fabrication</h2>
+        <p>
+            The design started in AutoCAD, where I modeled the two fit pieces that anchor the structure and a single leg shape repeated twenty times around them. Once the model was finalized, I laser-cut all twenty-two pieces from acrylic.
+        </p>
+    </div>
+
+    <div class="two-col">
+        <video controls preload="metadata" src="images/laser-lamp-process-1.mov">Your browser does not support the video tag.</video>
+        <video controls preload="metadata" src="images/laser-lamp.mp4">Your browser does not support the video tag.</video>
+    </div>
+    <p class="img-caption" style="text-align:center;margin-top:-1rem">CAD models in AutoCAD</p>
+
+    <video class="img-full" controls preload="metadata" src="images/laser-lamp-process-3.mov" style="margin-bottom:.5rem">Your browser does not support the video tag.</video>
+    <p class="img-caption" style="text-align:center">Laser-cutting the acrylic pieces</p>
+
+    <div class="prose">
+        <h2>Getting the Legs Right</h2>
+        <p>
+            My first pass used <strong>1/8 inch acrylic</strong> for the legs. The fit pieces fit exactly as designed, but the legs themselves were too flimsy,some broke while I was fitting all twenty into place. I switched to <strong>1/4 inch acrylic</strong> for the legs, and the thicker material held up through assembly while still fitting the fit pieces exactly as intended.
+        </p>
+    </div>
+
+    <video class="img-full" controls preload="metadata" src="images/laser-lamp-process-4.mov" style="margin-bottom:.5rem">Your browser does not support the video tag.</video>
+    <p class="img-caption" style="text-align:center">Turning on the finished lamp</p>
+
+    <div class="two-col">
+        <img src="images/laser-lamp-2.jpg" alt="The finished, illuminated laser-cut acrylic lamp">
+        <img src="images/laser-lamp-3.jpg" alt="The finished, illuminated laser-cut acrylic lamp">
+    </div>
+
+    <div class="callout">
+        <p>
+            <strong>Takeaway:</strong> A repeated part is only as strong as its thinnest dimension. Moving from 1/8 inch to 1/4 inch acrylic was a small material change, but it was the difference between a fragile prototype and a lamp that held together through assembly.
+        </p>
+    </div>
+
+    <div class="tags">
+        <span class="tag">AutoCAD</span>
+        <span class="tag">Laser Cutting</span>
+        <span class="tag">Acrylic</span>
+        <span class="tag">Product Design</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Iterative Design</span>
+        <span class="tag">Fabrication</span>
+    </div>
+</div>
+
+<footer>
+    <span>&copy; 2026 Mia Andreu</span>
+    <a href="index.html">Home</a>
+</footer>
+
+</body>
+</html>
