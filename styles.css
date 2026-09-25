@@ -182,8 +182,8 @@ h1,h2,h3,.no,.sno,.lbl,.btn,.tlink,.next-name,.strip-home,.strip-back,
 
 @media (max-width:960px){
     .cover .sheet-grid{grid-template-columns:1fr}
-    .cover .main{border-right:0;padding-right:0;border-bottom:1.5px solid var(--ink);padding-bottom:1.75rem;margin-bottom:1.75rem}
-    .tb{padding-left:0}
+    .cover .main{border-right:0;padding-right:0;order:2}
+    .tb{padding-left:0;order:1;border-bottom:1.5px solid var(--ink);padding-bottom:1.75rem;margin-bottom:1.75rem}
     .stmt{text-align:left}
 }
 @media (max-width:640px){
