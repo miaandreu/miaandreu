@@ -3,265 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hanoi Air Quality Digital Twin | Mia Andreu</title>
+    <title>Hanoi Air Quality Digital Twin · Mia Andreu</title>
+    <meta name="description" content="An agent-based digital twin of a Hanoi intersection, built in GAMA at VinUniversity, testing how lane separation affects congestion and air quality.">
+    <meta name="theme-color" content="#0E3F43">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{
-            --bg:#1E1E1E;--bg2:#252526;--bg3:#2D2D2D;
-            --tx:#FFFFFF;--tx2:#BBBBBB;--tx3:#707070;
-            --grn:#D8FE01;--grn-dim:rgba(216,254,1,.07);--grn-mid:rgba(216,254,1,.18);
-            --bdr:#2E2E2E;--r:10px;
-            --f:'Inter',system-ui,sans-serif;--m:'JetBrains Mono',monospace;
-        }
-        html{scroll-behavior:smooth}
-        body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
-
-        /* Nav */
-        nav{
-            position:fixed;top:0;left:0;right:0;height:56px;
-            background:rgba(30,30,30,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-            border-bottom:1px solid var(--bdr);z-index:100;
-            display:flex;align-items:center;justify-content:space-between;
-            padding:0 clamp(1.25rem,5vw,3rem);
-        }
-        .nlogo{font-family:var(--m);font-size:.85rem;font-weight:600;color:var(--tx);text-decoration:none}
-        .nlogo span{color:var(--grn)}
-        .back{font-size:.78rem;color:var(--tx3);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s}
-        .back:hover{color:var(--grn)}
-
-        /* Hero */
-        .hero-img{
-            width:100%;max-height:500px;object-fit:cover;display:block;
-            margin-top:56px;border-bottom:1px solid var(--bdr);
-        }
-
-        /* Content */
-        .content{max-width:860px;margin:0 auto;padding:3rem clamp(1.25rem,5vw,3rem) 5rem}
-        .badge{
-            display:inline-block;background:var(--grn-dim);color:var(--grn);border:1px solid var(--grn-mid);
-            font-family:var(--m);font-size:.65rem;font-weight:600;
-            padding:.2rem .65rem;border-radius:100px;
-            text-transform:uppercase;letter-spacing:.05em;margin-bottom:1rem;
-        }
-        h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:.75rem}
-        .meta{font-family:var(--m);font-size:.75rem;color:var(--tx3);margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:1.5rem}
-        .meta span{display:flex;align-items:center;gap:.35rem}
-
-        .prose{margin-bottom:2.5rem}
-        .prose h2{font-size:1.2rem;font-weight:700;margin-bottom:.75rem;margin-top:2.5rem;color:var(--tx)}
-        .prose h2:first-child{margin-top:0}
-        .prose p{font-size:.92rem;color:var(--tx2);line-height:1.85;margin-bottom:1rem}
-        .prose ul{list-style:none;margin-bottom:1rem}
-        .prose li{
-            font-size:.88rem;color:var(--tx2);line-height:1.7;
-            padding-left:1.2rem;position:relative;margin-bottom:.4rem;
-        }
-        .prose li::before{content:'\2192';position:absolute;left:0;color:var(--grn);font-size:.78rem}
-        .prose strong{color:var(--tx);font-weight:600}
-        .prose em{color:var(--grn);font-style:normal;font-weight:600}
-
-        /* Image grid */
-        .img-full{width:100%;border-radius:var(--r);border:1px solid var(--bdr);margin:1.5rem 0;display:block}
-        .img-caption{font-family:var(--m);font-size:.68rem;color:var(--tx3);margin-top:-.75rem;margin-bottom:1.5rem}
-
-        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
-        .two-col img{width:100%;border-radius:var(--r);border:1px solid var(--bdr);display:block}
-        @media(max-width:600px){.two-col{grid-template-columns:1fr}}
-
-        /* Scenarios */
-        .scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
-        .scenario{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:1.25rem;text-align:center}
-        .scenario-name{font-weight:700;font-size:.9rem;margin-bottom:.3rem}
-        .scenario-aqi{font-family:var(--m);font-size:1.5rem;font-weight:700;color:var(--grn);margin-bottom:.25rem}
-        .scenario-rank{font-family:var(--m);font-size:.7rem;color:var(--tx3);margin-bottom:.5rem}
-        .scenario-desc{font-size:.78rem;color:var(--tx2);line-height:1.5}
-        @media(max-width:600px){.scenarios{grid-template-columns:1fr}}
-
-        /* Team */
-        .team{display:flex;gap:1.5rem;margin:1.5rem 0;flex-wrap:wrap}
-        .team-member{font-size:.82rem;color:var(--tx2)}
-        .team-member strong{color:var(--tx);display:block;font-size:.88rem}
-
-        /* Findings */
-        .findings{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0}
-        .finding-col h3{font-size:.9rem;font-weight:700;margin-bottom:.65rem;color:var(--grn)}
-        @media(max-width:600px){.findings{grid-template-columns:1fr}}
-
-        /* Callout */
-        .callout{
-            background:var(--grn-dim);border:1px solid rgba(216,254,1,.2);
-            border-radius:var(--r);padding:1.25rem 1.5rem;margin:1.5rem 0;
-        }
-        .callout p{font-size:.88rem;color:var(--tx2);line-height:1.7;margin:0}
-        .callout strong{color:var(--tx)}
-
-        /* Tags */
-        .tags{display:flex;flex-wrap:wrap;gap:.35rem;margin:1.5rem 0}
-        .tag{background:var(--bg3);color:var(--tx3);font-family:var(--m);font-size:.65rem;padding:.2rem .55rem;border-radius:4px}
-
-        /* Footer */
-        footer{
-            border-top:1px solid var(--bdr);padding:1.5rem clamp(1.25rem,5vw,3rem);
-            font-family:var(--m);font-size:.7rem;color:var(--tx3);
-            display:flex;justify-content:space-between;align-items:center;
-        }
-        footer a{color:var(--tx3);text-decoration:none;transition:color .2s}
-        footer a:hover{color:var(--grn)}
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&family=Atkinson+Hyperlegible+Next:wght@400;500;700&family=B612+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="plot" id="plot" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+</svg>
 
-<nav>
-    <a href="index.html" class="nlogo">mia<span>.andreu</span></a>
-    <a href="index.html#projects" class="back">&larr; Back to projects</a>
-</nav>
+<header class="strip">
+    <a class="strip-home" href="index.html"><span class="bullet" aria-hidden="true">M</span><span class="strip-name">Mia Andreu</span></a>
+    <a class="strip-back" href="index.html#projects"><svg aria-hidden="true"><use href="#i-back"/></svg><span>Back to index</span></a>
+</header>
 
-<img class="hero-img" src="images/vietnam-page-header.JPG" alt="Hanoi, Vietnam">
-
-<div class="content">
-    <div class="badge">VinUniversity &middot; Hanoi, Vietnam</div>
-    <h1>Digital Twin for Intersection Throughput and Air Pollution in Hanoi</h1>
-    <div class="meta">
-        <span>Team of 4</span>
-        <span>GAMA Platform</span>
-        <span>VinUniversity</span>
-        <span>Global Collaboration</span>
+<main class="cs-wrap">
+<article class="cs-sheet">
+    <div class="refs" aria-hidden="true">
+        <div class="t"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="l"><span>A</span><span>B</span><span>C</span><span>D</span></div>
+        <div class="r"><span>A</span><span>B</span><span>C</span><span>D</span></div>
+        <div class="b"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+    </div>
+    <div class="cs-top">
+        <div>
+            <h1 class="cs-title">A digital twin for air quality at a Hanoi intersection</h1>
+            <p class="cs-lede">We modeled one of Hanoi's busiest intersections to test which traffic changes clean the air. The answer surprised us: a bus-only lane did the least good, while separating every vehicle type cut simulated AQI in half.</p>
+        </div>
+        <div class="cs-no"><b>P-101</b><span>Sheet 1 of 5</span></div>
     </div>
 
-    <div class="prose">
+    <dl class="facts">
+        <div><dt>Station</dt><dd><span class="code">HAN</span> VinUniversity, Hanoi</dd></div>
+        <div><dt>UN goal</dt><dd>SDG 11, Sustainable Cities and Communities</dd></div>
+        <div><dt>When</dt><dd>January 2026</dd></div>
+        <div><dt>Where</dt><dd>VinUniversity College of Engineering and Computer Science</dd></div>
+        <div><dt>Team</dt><dd>4 students, 3 disciplines</dd></div>
+        <div><dt>Method</dt><dd>Agent-based simulation</dd></div>
+        <div><dt>Tool</dt><dd>GAMA platform</dd></div>
+    </dl>
+
+    <figure class="cs-hero">
+        <img src="images/web/vietnam-page-header.jpg" width="1600" height="1200" alt="Street scene in Hanoi, Vietnam">
+    </figure>
+    <figcaption class="fig">FIG. 1 — Street scene, central Hanoi</figcaption>
+
+    <div class="cs-body">
         <h2>Overview</h2>
-        <p>
-            At VinUniversity's College of Engineering and Computer Science, our team collaborated across disciplines and cultures to tackle a real-world challenge: traffic congestion and air quality at one of Hanoi's busiest intersections. We combined engineering analysis, computational tools, and on-the-ground observations to understand how transportation behavior and urban infrastructure shape daily conditions across the city.
-        </p>
-        <p>
-            We visited multiple districts to observe traffic patterns firsthand, then used those insights to propose an air quality improvement approach. Using the <strong>GAMA platform</strong> and <strong>digital twin simulations</strong>, we tested our ideas in a virtual environment to estimate impacts and evaluate effectiveness before real-world implementation.
-        </p>
+        <p>At VinUniversity, our team worked across disciplines and cultures on a real problem: traffic congestion and air quality at one of Hanoi's busiest intersections. We combined engineering analysis, computational tools, and on-the-ground observation to understand how transport behavior and urban infrastructure shape daily conditions across the city.</p>
+        <p>We visited several districts to watch traffic firsthand, then used the <strong>GAMA platform</strong> to build a <strong>digital twin</strong>. That let us test interventions virtually and estimate their impact before anyone paints a lane.</p>
 
-        <h2>The Team</h2>
+        <h2>The team</h2>
         <div class="team">
-            <div class="team-member"><strong>Mia Andreu</strong>Mechanical Engineering</div>
-            <div class="team-member"><strong>Oswaldo Soriano</strong>Mechanical Engineering</div>
-            <div class="team-member"><strong>Guarien Barone Jr.</strong>Computer Engineering</div>
-            <div class="team-member"><strong>Vu Huong Ngan</strong>Disaster Risk</div>
+            <div><strong>Mia Andreu</strong>Mechanical Engineering</div>
+            <div><strong>Oswaldo Soriano</strong>Mechanical Engineering</div>
+            <div><strong>Guarien Barone Jr.</strong>Computer Engineering</div>
+            <div><strong>Vu Huong Ngan</strong>Disaster Risk</div>
         </div>
 
-        <h2>On the Ground in Hanoi</h2>
-    </div>
+        <h2>On the ground</h2>
+        <div class="pair wide">
+            <img src="images/web/traffic_vietnam.jpg" width="1600" height="1200" alt="The team observing traffic patterns in Hanoi" loading="lazy">
+            <img src="images/web/vietnam_traffic.jpg" width="1600" height="1200" alt="Aerial view of a Hanoi intersection with motorbikes and lane dividers" loading="lazy">
+        </div>
 
-    <div class="two-col">
-        <img src="images/traffic_vietnam.jpeg" alt="Team in Vietnam observing traffic patterns">
-        <img src="images/vietnam_traffic.jpeg" alt="Aerial view of Hanoi intersection with motorbikes and lane dividers">
-    </div>
-
-    <div class="prose">
-        <h2>Why This Intersection</h2>
-        <p>
-            We focused on the <strong>Ch&ugrave;a B&#7897;c Street intersection</strong>,a high-density, mixed-traffic environment common in central Hanoi. This intersection represents the kind of chaotic, unstructured traffic flow that makes air quality improvement so challenging in Southeast Asian cities.
-        </p>
+        <h2>Why this intersection</h2>
+        <p>We focused on the <strong>Chùa Bộc Street intersection</strong>, a dense, mixed-traffic junction typical of central Hanoi. Its unstructured flow is exactly what makes air quality so hard to improve in Southeast Asian cities.</p>
         <ul>
-            <li>Motorbikes dominate traffic and move flexibly across available space, not fixed lanes</li>
-            <li>Mixed vehicle types compete for the same road space</li>
-            <li>Buses face repeated interruptions, reducing schedule reliability</li>
-            <li>Pedestrian crossings add stop-and-go waves, resulting in inconsistent flow</li>
-            <li>Congestion is driven by interaction intensity, not signal timing alone</li>
+            <li>Motorbikes dominate and move across any open space, not fixed lanes</li>
+            <li>Mixed vehicle types compete for the same road</li>
+            <li>Buses are interrupted again and again, so schedules slip</li>
+            <li>Pedestrian crossings add stop-and-go waves</li>
+            <li>Congestion comes from how intensely vehicles interact, not signal timing alone</li>
         </ul>
 
-        <h2>Scientific Questions</h2>
-        <p>Our research centered on two key questions:</p>
+        <h2>The questions</h2>
         <ul>
-            <li><strong>How would dedicated bus lanes impact motorcycle usage and public transportation efficiency?</strong></li>
-            <li><strong>Which vehicle types contribute most to air pollution, and how can this inform targeted policy interventions?</strong></li>
+            <li><strong>How would dedicated bus lanes change motorcycle use and public transit efficiency?</strong></li>
+            <li><strong>Which vehicle types contribute most to air pollution, and how should that shape policy?</strong></li>
         </ul>
 
-        <h2>The Digital Twin Model</h2>
-        <p>
-            We built an agent-based simulation using the GAMA platform that models vehicles (cars, motorbikes, buses, pedestrians), road infrastructure (lanes, traffic lights, bus stops), and traffic police compliance. Each vehicle type has unique properties,speed, lane behavior, emission rates,and the model tracks a cumulative <em>AQI metric</em> to measure air quality changes relative to a baseline scenario where no lane separation exists.
-        </p>
+        <h2>The model</h2>
+        <p>Our agent-based simulation in GAMA models cars, motorbikes, buses, and pedestrians. It also models the road itself (lanes, traffic lights, bus stops) and whether drivers comply with traffic police. Each vehicle type has its own speed, lane behavior, and emission rate. The model tracks a cumulative <strong>AQI metric</strong> against a baseline with no lane separation.</p>
+        <figure>
+            <video src="images/GAMA_video-1.mov" poster="images/web/poster-gama_video-1.jpg" width="1400" height="1015" autoplay loop muted playsinline preload="metadata" aria-label="GAMA agent-based traffic simulation running"></video>
+        </figure>
+        <figcaption class="fig">FIG. 2 — Agent-based traffic simulation running in GAMA</figcaption>
 
-        <h2>GAMA Simulation</h2>
-    </div>
-
-    <video style="width:100%;border-radius:var(--r);border:1px solid var(--bdr);margin-bottom:.5rem" src="images/GAMA_video-1.mov" autoplay loop muted playsinline></video>
-    <p class="img-caption" style="text-align:center;margin-bottom:1.5rem">Agent-based traffic simulation running in the GAMA platform</p>
-
-    <div class="prose">
-        <h2>Three Scenarios Tested</h2>
-    </div>
-
-    <div class="scenarios">
-        <div class="scenario">
-            <div class="scenario-name">Three Separate Lanes</div>
-            <div class="scenario-aqi">~100</div>
-            <div class="scenario-rank">Best option</div>
-            <div class="scenario-desc">Defined lanes for all three vehicle types to reduce congestion and mixed-traffic interactions.</div>
+        <h2>Three scenarios, one baseline</h2>
+        <p>Simulated AQI at the intersection. Lower is cleaner.</p>
+        <div class="bars" role="list">
+            <div class="bar" role="listitem">
+                <div class="bar-name">Baseline<small>No lane separation</small></div>
+                <div class="bar-track"><div class="bar-fill is-base" style="--v:100%"></div><span class="bar-val">~200</span></div>
+            </div>
+            <div class="bar" role="listitem">
+                <div class="bar-name">Bus lane only<small>Outer-road lane for EV transit</small></div>
+                <div class="bar-track"><div class="bar-fill" style="--v:65%"></div><span class="bar-val">~130</span></div>
+            </div>
+            <div class="bar" role="listitem">
+                <div class="bar-name">Low compliance<small>Motorbikes still enter bus lanes</small></div>
+                <div class="bar-track"><div class="bar-fill" style="--v:52.5%"></div><span class="bar-val">~105</span></div>
+            </div>
+            <div class="bar" role="listitem">
+                <div class="bar-name">Three separate lanes<small>One lane per vehicle type</small></div>
+                <div class="bar-track"><div class="bar-fill" style="--v:50%"></div><span class="bar-val">~100</span></div>
+            </div>
         </div>
-        <div class="scenario">
-            <div class="scenario-name">Low Compliance</div>
-            <div class="scenario-aqi">~105</div>
-            <div class="scenario-rank">Second best</div>
-            <div class="scenario-desc">Bus lanes exist but motorbikes still enter,heavy heterogeneity. Still outperformed bus-only lanes.</div>
-        </div>
-        <div class="scenario">
-            <div class="scenario-name">Bus Lane Only</div>
-            <div class="scenario-aqi">~130</div>
-            <div class="scenario-rank">Third best</div>
-            <div class="scenario-desc">Outer-road dedicated lane for EV public transit only. Unexpectedly increased congestion elsewhere.</div>
-        </div>
-    </div>
+        <p class="bars-note">Even with imperfect compliance, separating lanes beat a dedicated bus lane, which pushed congestion elsewhere.</p>
 
-    <div class="prose">
-        <p style="font-size:.82rem;color:var(--tx3);text-align:center;margin-bottom:2rem">
-            All scenarios compared against baseline model (AQI ~200) where no lane separation exists.
-        </p>
+        <h2>What we found</h2>
+        <ul>
+            <li>Bus-only lanes <strong>increased congestion elsewhere</strong> and ranked last of the three scenarios, the opposite of our hypothesis</li>
+            <li>The main pollution driver was <strong>stop-and-go traffic</strong> from mixed vehicle interactions</li>
+            <li>Changing traffic flow cut emissions <strong>without electrification or vehicle bans</strong></li>
+        </ul>
 
-        <h2>Key Findings &amp; Policy Implications</h2>
-    </div>
+        <h2>What it means for policy</h2>
+        <ul>
+            <li>Separating lanes improves flow even when compliance is imperfect</li>
+            <li>Enforcement is needed to keep the benefits over time</li>
+            <li>Pilot corridor by corridor to clean the air while keeping access</li>
+        </ul>
 
-    <div class="findings">
-        <div class="finding-col">
-            <h3>Key Findings</h3>
-            <ul style="list-style:none;padding:0">
-                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Bus-only lanes <strong style="color:var(--tx)">increased congestion</strong> and worsened air quality,opposite of our hypothesis</li>
-                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>The main pollution driver was <strong style="color:var(--tx)">stop-and-go traffic</strong> from mixed vehicle interactions</li>
-                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Traffic flow changes reduced emissions <strong style="color:var(--tx)">without relying on electrification or vehicle bans</strong></li>
-            </ul>
-        </div>
-        <div class="finding-col">
-            <h3>Policy Implications</h3>
-            <ul style="list-style:none;padding:0">
-                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Separating lanes improves flow even when compliance is imperfect</li>
-                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Enforcement is needed to sustain benefits over time</li>
-                <li style="font-size:.85rem;color:var(--tx2);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.5rem"><span style="position:absolute;left:0;color:var(--grn)">&rarr;</span>Pilot by corridor first to improve air quality while maintaining access</li>
-            </ul>
+        <p class="takeaway">Cleaner air at a congested intersection comes from a sequence of targeted, tested interventions, not one sweeping fix.</p>
+        <div class="tags">
+            <span class="tag">GAMA PLATFORM</span><span class="tag">DIGITAL TWIN</span><span class="tag">AGENT-BASED MODELING</span>
+            <span class="tag">AIR QUALITY</span><span class="tag">URBAN PLANNING</span><span class="tag">TRAFFIC SIMULATION</span>
         </div>
     </div>
 
-    <div class="callout">
-        <p>
-            <strong>Conclusion:</strong> Improving air quality at congested intersections is best achieved through a sequence of targeted, evidence-based interventions guided by digital twin simulation,rather than a single sweeping fix. Even imperfect compliance with lane separation produced meaningful AQI improvements compared to the status quo.
-        </p>
-    </div>
+    <a class="next" href="revit-building.html">
+        <span><span class="next-lbl">NEXT SHEET · P-102</span><span class="next-name">The Andreu Building, LEED Platinum</span></span>
+        <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+    </a>
+</article>
+</main>
 
-    <div class="tags">
-        <span class="tag">GAMA Platform</span>
-        <span class="tag">Digital Twin</span>
-        <span class="tag">Agent-Based Modeling</span>
-        <span class="tag">Air Quality</span>
-        <span class="tag">Urban Planning</span>
-        <span class="tag">Traffic Simulation</span>
-        <span class="tag">Vietnam</span>
-        <span class="tag">VinUniversity</span>
-        <span class="tag">Global Collaboration</span>
-    </div>
-</div>
-
-<footer>
-    <span>&copy; 2026 Mia Andreu</span>
-    <a href="index.html">Home</a>
+<footer class="foot" style="max-width:1040px;margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)">
+    <p>© 2026 Mia Andreu</p>
+    <nav aria-label="Footer"><a href="index.html">Home</a><a href="index.html#contact">Contact</a><a href="mia-andreu-resume.pdf" download>CV</a></nav>
 </footer>
-
+<script>
+(function(){
+    const plot=document.getElementById('plot');
+    const hs=[...document.querySelectorAll('.cs-body h2')];
+    hs.forEach(h=>{ if(h.getBoundingClientRect().top>innerHeight*0.85) h.classList.add('pre'); });
+    const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.remove('pre')})},{threshold:.15,rootMargin:'0px 0px -10% 0px'});
+    hs.forEach(h=>io.observe(h));
+    const barsBlock=document.querySelector('.bars');
+    if(barsBlock){
+        if(barsBlock.getBoundingClientRect().top>innerHeight*0.85) barsBlock.classList.add('pre');
+        new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.remove('pre')})},{threshold:.3}).observe(barsBlock);
+    }
+    let t=false;
+    function up(){ t=false; const h=document.documentElement.scrollHeight-innerHeight; plot.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')'; }
+    addEventListener('scroll',()=>{ if(!t){ t=true; requestAnimationFrame(up); } },{passive:true});
+    up();
+})();
+</script>
 </body>
 </html>

@@ -3,878 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mia Andreu | Mechanical Engineering</title>
+    <title>Mia Andreu · Engineering for Sustainable Cities and Communities</title>
+    <meta name="description" content="Mia Andreu, mechanical engineering student at NYU Tandon working toward sustainable cities and communities (SDG 11) and quality education (SDG 4). Case studies: Hanoi air-quality digital twin, LEED Platinum building design, laser-cut lamp.">
+    <meta name="theme-color" content="#0E3F43">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
-        :root{
-            --bg:#1E1E1E;
-            --bg2:#252526;
-            --bg3:#2D2D2D;
-            --tx:#FFFFFF;
-            --tx2:#BBBBBB;
-            --tx3:#707070;
-            --grn:#D8FE01;
-            --grn-dim:rgba(216,254,1,.07);
-            --grn-mid:rgba(216,254,1,.18);
-            --bdr:#2E2E2E;
-            --r:10px;
-            --f:'Inter',system-ui,sans-serif;
-            --m:'JetBrains Mono',monospace;
-        }
-
-        html{scroll-behavior:smooth}
-        body{font-family:var(--f);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
-
-        /* =========== NAV =========== */
-        nav{
-            position:fixed;top:0;left:0;right:0;height:56px;
-            background:rgba(30,30,30,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-            border-bottom:1px solid var(--bdr);z-index:100;
-            display:flex;align-items:center;justify-content:space-between;
-            padding:0 clamp(1.25rem,5vw,3rem);
-            transition:box-shadow .3s;
-        }
-        nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.5)}
-        .nlogo{font-family:var(--m);font-size:.85rem;font-weight:600;color:var(--tx);text-decoration:none}
-        .nlogo span{color:var(--grn)}
-        .nlinks{display:flex;gap:1.75rem;list-style:none;align-items:center}
-        .nlinks a{font-size:.76rem;font-weight:500;color:var(--tx3);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s}
-        .nlinks a:hover,.nlinks a.active{color:var(--grn)}
-        .nlinks .cta{background:var(--grn);color:#111;padding:.4rem 1rem;border-radius:6px;font-weight:600}
-        .nlinks .cta:hover{background:#c2e500}
-        .ntoggle{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
-        .ntoggle span{width:20px;height:2px;background:var(--tx);border-radius:2px;transition:.3s}
-
-        /* =========== HERO =========== */
-        #hero{
-            min-height:100vh;
-            display:grid;
-            grid-template-columns:1fr auto;
-            align-items:center;
-            gap:clamp(2rem,6vw,5rem);
-            padding:calc(56px + 4rem) clamp(1.25rem,8vw,10rem) 4rem;
-            max-width:1300px;margin:0 auto;
-        }
-        .hero-text{max-width:600px}
-        .hero-label{
-            font-family:var(--m);font-size:.7rem;color:var(--grn);
-            letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5rem;
-            display:flex;align-items:center;gap:.6rem;
-        }
-        .hero-label::before{content:'';width:24px;height:1px;background:var(--grn)}
-        .hero-name{
-            font-size:clamp(2.8rem,7vw,5rem);font-weight:900;
-            letter-spacing:-.04em;line-height:.95;margin-bottom:1.25rem;
-        }
-        .hero-name em{font-style:normal;color:var(--grn)}
-        .hero-sub{font-size:clamp(.95rem,1.6vw,1.1rem);color:var(--tx2);max-width:480px;line-height:1.7;margin-bottom:2rem}
-        .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
-        .btn{
-            display:inline-flex;align-items:center;gap:.45rem;
-            padding:.75rem 1.6rem;border-radius:8px;
-            font-weight:600;font-size:.88rem;text-decoration:none;
-            transition:transform .15s,box-shadow .2s,background .2s;border:none;cursor:pointer;
-        }
-        .btn-g{background:var(--grn);color:#111;box-shadow:0 2px 16px rgba(216,254,1,.2)}
-        .btn-g:hover{transform:translateY(-1px);box-shadow:0 4px 24px rgba(216,254,1,.35)}
-        .btn-o{background:transparent;color:var(--tx);border:1.5px solid #444}
-        .btn-o:hover{border-color:var(--grn);color:var(--grn);transform:translateY(-1px)}
-
-        .hero-photo{
-            width:clamp(320px,35vw,480px);
-            border-radius:var(--r);
-            overflow:hidden;
-            border:2px solid var(--bdr);
-            position:relative;
-            align-self:center;
-        }
-        .hero-photo::after{
-            content:'';position:absolute;inset:0;
-            border-radius:var(--r);
-            box-shadow:inset 0 0 0 2px rgba(216,254,1,.15);
-            pointer-events:none;
-        }
-        .hero-photo img{width:100%;height:auto;display:block;filter:grayscale(.15)}
-
-        .hero-stats{
-            display:flex;gap:2.5rem;margin-top:2.5rem;
-            padding-top:1.75rem;border-top:1px solid var(--bdr);flex-wrap:wrap;
-        }
-        .hs-val{font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
-        .hs-lbl{font-family:var(--m);font-size:.68rem;color:var(--tx3)}
-
-        /* =========== TICKER =========== */
-        .ticker-wrap{
-            overflow:hidden;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);
-            padding:.65rem 0;background:var(--bg2);position:relative;z-index:1;
-        }
-        .ticker{
-            display:flex;gap:2.5rem;
-            animation:scroll 30s linear infinite;
-            width:max-content;
-        }
-        .ticker span{
-            font-family:var(--m);font-size:.72rem;color:var(--tx3);
-            white-space:nowrap;text-transform:uppercase;letter-spacing:.08em;
-        }
-        .ticker .dot{color:var(--grn)}
-        @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-        /* =========== SECTIONS =========== */
-        .sec{padding:6rem clamp(1.25rem,8vw,10rem);max-width:1300px;margin:0 auto}
-        .sec-full{padding:6rem clamp(1.25rem,8vw,10rem);max-width:100%}
-        .sec-full .inner{max-width:1300px;margin:0 auto}
-        .sec-num{
-            font-family:var(--m);font-size:.65rem;color:var(--grn);
-            letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem;
-            display:flex;align-items:center;gap:.6rem;
-        }
-        .sec-num::after{content:'';flex:1;max-width:60px;height:1px;background:var(--bdr)}
-        .sec-t{font-size:clamp(1.6rem,3.5vw,2.25rem);font-weight:700;letter-spacing:-.03em;margin-bottom:.6rem;line-height:1.15}
-        .sec-sub{font-size:.95rem;color:var(--tx2);max-width:540px;line-height:1.7}
-        .sec-hdr{margin-bottom:2.5rem}
-        .divider{height:1px;background:var(--bdr);max-width:1300px;margin:0 auto}
-
-        /* =========== ABOUT =========== */
-        .about-cols{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:start}
-        .about-text p{color:var(--tx2);line-height:1.85;margin-bottom:1.15rem;font-size:.94rem}
-        .about-text strong{color:var(--tx);font-weight:600}
-        .edu{
-            background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
-            padding:1.35rem;margin-bottom:1.25rem;
-        }
-        .edu-school{font-weight:700;font-size:.95rem;margin-bottom:.15rem}
-        .edu-deg{font-size:.82rem;color:var(--tx2)}
-        .edu-meta{display:flex;justify-content:space-between;margin-top:.5rem;flex-wrap:wrap;gap:.5rem}
-        .edu-gpa{font-family:var(--m);font-size:.75rem;color:var(--grn);font-weight:600}
-        .edu-date{font-family:var(--m);font-size:.75rem;color:var(--tx3)}
-
-        /* =========== EXPERIENCE =========== */
-        .exp-list{display:flex;flex-direction:column}
-        .exp-row{
-            display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;
-            padding:1.35rem 0;border-bottom:1px solid var(--bdr);
-            cursor:default;transition:padding .3s;
-        }
-        .exp-row:first-child{border-top:1px solid var(--bdr)}
-        .exp-row:hover{padding-left:.5rem}
-        .exp-row:hover .exp-co{color:var(--grn)}
-        .exp-co{font-weight:600;font-size:1rem;transition:color .2s}
-        .exp-rl{font-size:.82rem;color:var(--tx2);margin-top:.1rem}
-        .exp-dt{font-family:var(--m);font-size:.7rem;color:var(--tx3);text-align:right;white-space:nowrap}
-        .exp-det{
-            max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;
-            opacity:0;
-        }
-        .exp-row.open .exp-det{max-height:300px;opacity:1;margin-top:.75rem}
-        .exp-det ul{list-style:none;padding:0}
-        .exp-det li{
-            font-size:.84rem;color:var(--tx2);line-height:1.6;
-            padding-left:1rem;position:relative;margin-bottom:.35rem;
-        }
-        .exp-det li::before{content:'\2192';position:absolute;left:0;color:var(--grn);font-size:.75rem}
-
-        /* =========== IMAGE BREAK =========== */
-        .img-break{
-            width:100%;height:420px;overflow:hidden;position:relative;
-        }
-        .img-break img{width:100%;height:100%;object-fit:cover;display:block}
-        .img-break .overlay{
-            position:absolute;inset:0;
-            background:linear-gradient(to top,var(--bg) 0%,transparent 40%,transparent 70%,var(--bg) 100%);
-        }
-        .img-break .caption{
-            position:absolute;bottom:2rem;left:clamp(1.25rem,8vw,10rem);
-            font-family:var(--m);font-size:.7rem;color:var(--tx3);
-            letter-spacing:.08em;text-transform:uppercase;
-        }
-        .img-break .caption span{color:var(--grn)}
-
-        /* =========== PROJECTS BENTO =========== */
-        .bento{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            grid-auto-rows:minmax(280px,auto);
-            gap:1rem;
-        }
-        .bento-item{
-            background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
-            overflow:hidden;position:relative;
-            display:flex;flex-direction:column;
-            transition:transform .25s,box-shadow .25s,border-color .25s;
-        }
-        .bento-item:hover{
-            transform:translateY(-4px);
-            box-shadow:0 16px 48px rgba(0,0,0,.4);
-            border-color:var(--grn);
-        }
-        .bento-item.large{grid-column:span 2;grid-row:span 1}
-        .bento-item.static{cursor:default}
-        .bento-item.static:hover{transform:none;box-shadow:none;border-color:var(--bdr)}
-        .bento-img{width:100%;max-height:320px;object-fit:cover;display:block;border-bottom:1px solid var(--bdr)}
-        .bento-item.large .bento-img{max-height:380px}
-        .bento-vid{width:100%;max-height:320px;object-fit:cover;display:block;border-bottom:1px solid var(--bdr)}
-        .bento-body{padding:1.35rem;flex:1;display:flex;flex-direction:column}
-        .bento-badge{
-            display:inline-block;
-            background:var(--grn-dim);color:var(--grn);border:1px solid var(--grn-mid);
-            font-family:var(--m);font-size:.62rem;font-weight:600;
-            padding:.15rem .55rem;border-radius:100px;
-            text-transform:uppercase;letter-spacing:.04em;
-            margin-bottom:.6rem;width:fit-content;
-        }
-        .bento-title{font-weight:700;font-size:.98rem;margin-bottom:.4rem;line-height:1.3}
-        .bento-desc{font-size:.82rem;color:var(--tx2);line-height:1.6;flex:1}
-        .bento-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.85rem}
-        .bento-tag{
-            background:var(--bg3);color:var(--tx3);font-family:var(--m);
-            font-size:.62rem;padding:.15rem .5rem;border-radius:4px;
-        }
-
-        /* =========== LEADERSHIP =========== */
-        .lead-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-        .lead-card{
-            background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
-            overflow:hidden;transition:transform .2s,box-shadow .2s;
-        }
-        .lead-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
-        .lead-card-img{width:100%;max-height:300px;object-fit:cover;object-position:center 35%;display:block;border-bottom:1px solid var(--bdr)}
-        .lead-card-body{padding:1.35rem}
-        .lead-org{font-weight:700;font-size:.95rem;margin-bottom:.15rem}
-        .lead-role{font-size:.82rem;color:var(--grn);font-weight:500;margin-bottom:.1rem}
-        .lead-date{font-family:var(--m);font-size:.68rem;color:var(--tx3);margin-bottom:.65rem}
-        .lead-desc{font-size:.82rem;color:var(--tx2);line-height:1.6}
-
-        .lead-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem}
-        .lead-row{
-            display:flex;justify-content:space-between;align-items:center;
-            padding:1rem 1.25rem;background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
-            transition:border-color .2s;
-        }
-        .lead-row:hover{border-color:var(--grn)}
-        .lead-row-left div:first-child{font-weight:600;font-size:.9rem}
-        .lead-row-left div:last-child{font-size:.78rem;color:var(--tx2)}
-        .lead-row-right{font-family:var(--m);font-size:.68rem;color:var(--tx3)}
-
-        /* =========== GLASS =========== */
-        .glass-bar{
-            display:flex;gap:0;border:1px solid var(--bdr);border-radius:var(--r);
-            overflow:hidden;margin-bottom:2rem;
-        }
-        .glass-seg{
-            flex:1;padding:1.15rem .75rem;text-align:center;
-            border-right:1px solid var(--bdr);
-            transition:background .2s;
-        }
-        .glass-seg:last-child{border-right:none}
-        .glass-seg:hover{background:var(--grn-dim)}
-        .glass-seg-name{font-weight:600;font-size:.78rem;margin-bottom:.2rem}
-        .glass-seg-desc{font-family:var(--m);font-size:.62rem;color:var(--tx3)}
-
-        .glass-focus{
-            background:var(--grn-dim);border:1px solid rgba(216,254,1,.2);
-            border-radius:var(--r);padding:1.5rem 1.75rem;
-        }
-        .glass-focus-lbl{font-family:var(--m);font-size:.68rem;color:var(--grn);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
-        .glass-focus p{font-size:.9rem;color:var(--tx2);line-height:1.75}
-        .glass-focus strong{color:var(--tx)}
-
-        /* =========== CONTACT =========== */
-        .contact-cols{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
-        .contact-text{font-size:.94rem;color:var(--tx2);line-height:1.8;margin-bottom:1.5rem}
-        .c-links{display:flex;flex-direction:column;gap:.65rem}
-        .c-link{
-            display:flex;align-items:center;gap:.85rem;
-            padding:1rem 1.25rem;background:var(--bg2);border:1px solid var(--bdr);
-            border-radius:var(--r);text-decoration:none;color:var(--tx);
-            transition:border-color .2s,transform .2s;
-        }
-        .c-link:hover{border-color:var(--grn);transform:translateX(4px)}
-        .c-link-icon{
-            width:36px;height:36px;background:var(--grn-dim);border-radius:8px;
-            display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
-        }
-        .c-link-lbl{font-family:var(--m);font-size:.65rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em}
-        .c-link-val{font-weight:500;font-size:.88rem}
-
-        .contact-form{display:flex;flex-direction:column;gap:.75rem}
-        .cf-label{font-family:var(--m);font-size:.72rem;color:var(--tx3);margin-bottom:.2rem;display:block}
-        .cf-input,.cf-textarea{
-            background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;
-            padding:.7rem .9rem;font-family:var(--f);font-size:.85rem;color:var(--tx);
-            width:100%;outline:none;transition:border-color .2s;
-        }
-        .cf-input:focus,.cf-textarea:focus{border-color:var(--grn);box-shadow:0 0 0 3px rgba(216,254,1,.1)}
-        .cf-textarea{min-height:100px;resize:vertical}
-
-        /* =========== FOOTER =========== */
-        footer{
-            border-top:1px solid var(--bdr);
-            padding:1.75rem clamp(1.25rem,5vw,3rem);
-            display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
-            font-family:var(--m);font-size:.7rem;color:var(--tx3);
-            position:relative;z-index:1;
-        }
-        footer a{color:var(--tx3);text-decoration:none;transition:color .2s}
-        footer a:hover{color:var(--grn)}
-        .flinks{display:flex;gap:1.5rem}
-
-        /* =========== ANIMATIONS =========== */
-        .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-        .reveal.vis{opacity:1;transform:none}
-
-        /* =========== RESPONSIVE =========== */
-        @media(max-width:900px){
-            #hero{grid-template-columns:1fr;text-align:left}
-            .hero-photo{width:200px;margin:0 auto 2rem;order:-1}
-            .about-cols{grid-template-columns:1fr}
-            .bento{grid-template-columns:1fr}
-            .bento-item.large{grid-column:span 1}
-            .lead-grid{grid-template-columns:1fr}
-            .contact-cols{grid-template-columns:1fr}
-            .glass-bar{flex-direction:column}
-            .glass-seg{border-right:none;border-bottom:1px solid var(--bdr)}
-            .glass-seg:last-child{border-bottom:none}
-        }
-        @media(max-width:600px){
-            .nlinks{
-                display:none;position:absolute;top:56px;left:0;right:0;
-                background:var(--bg);flex-direction:column;padding:1.25rem;gap:1rem;
-                border-bottom:1px solid var(--bdr);box-shadow:0 8px 30px rgba(0,0,0,.5);
-            }
-            .nlinks.open{display:flex}
-            .ntoggle{display:flex}
-            .sec,.sec-full{padding:4rem 1.25rem}
-            .img-break{height:260px}
-            .img-break .caption{left:1.25rem}
-            .hero-stats{gap:1.5rem}
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&family=Atkinson+Hyperlegible+Next:wght@400;500;700&family=B612+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip" href="#projects">Skip to the work</a>
+<div class="plot" id="plot" aria-hidden="true"></div>
 
-<!-- NAV -->
-<nav id="navbar">
-    <a href="#hero" class="nlogo">mia<span>.andreu</span></a>
-    <ul class="nlinks" id="navLinks">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#leadership">Leadership</a></li>
-        <li><a href="#glass">GLASS</a></li>
-        <li><a href="#contact" class="cta">Contact</a></li>
-    </ul>
-    <div class="ntoggle" id="navToggle"><span></span><span></span><span></span></div>
-</nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6l8.5 7 8.5-7"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16L17 7M9 7h8v8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+</svg>
 
-<main>
+<div class="sheets">
 
-<!-- HERO -->
-<section id="hero">
-    <div class="hero-text">
-        <div class="hero-label">Mechanical Engineering &middot; NYU Tandon '27</div>
-        <h1 class="hero-name">Mia<br><em>Andreu</em></h1>
-        <p class="hero-sub">
-            I study how energy moves through buildings and cities, then I figure out how to make it cleaner. Currently interning at WSP, previously launching rockets and designing LEED Platinum buildings.
-        </p>
-        <div class="hero-btns">
-            <a href="#projects" class="btn btn-g">See My Work</a>
-            <a href="mia-andreu-resume.pdf" class="btn btn-o" id="dlResume" download>Download CV</a>
-        </div>
-        <div class="hero-stats">
-            <div><div class="hs-val">3.9</div><div class="hs-lbl">GPA / 4.0</div></div>
-            <div><div class="hs-val">2</div><div class="hs-lbl">Internships</div></div>
-            <div><div class="hs-val">'27</div><div class="hs-lbl">Graduation</div></div>
-        </div>
+<!-- ============ COVER / TITLE SHEET ============ -->
+<header class="sheet cover is-in" id="cover">
+    <div class="refs" aria-hidden="true">
+        <div class="t"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="l"><span>A</span><span>B</span><span>C</span><span>D</span></div>
+        <div class="r"><span>A</span><span>B</span><span>C</span><span>D</span></div>
+        <div class="b"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
     </div>
-    <div class="hero-photo">
-        <img src="images/headshot.png" alt="Mia Andreu">
+    <div class="sheet-grid">
+        <div class="main">
+            <div class="hdr">
+                <h1 class="name">Mia<br>Andreu</h1>
+                <p class="stmt">I engineer for sustainable cities and the communities who live in them.</p>
+            </div>
+            <div class="idx" id="projects">
+                <h2 class="idx-h">Drawing Index · Projects</h2>
+                <ol class="rows with-fig">
+                    <li class="row link">
+                        <span class="no">P-101</span>
+                        <div class="ttl">
+                            <h3><a href="hanoi-digital-twin.html">Hanoi air-quality digital twin</a></h3>
+                            <p class="desc">A team-of-four digital twin of a busy intersection: separating lanes by vehicle type halved simulated AQI.</p>
+                            <p class="tools"><b>Tools</b> GAMA platform, agent-based modeling</p>
+                            <span class="go">View sheet <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                        </div>
+                        <figure class="plate"><img src="images/web/digital-twin.jpg" width="1600" height="1067" alt="Mia presenting the digital twin model to a room at VinUniversity"><figcaption>HAN · Jan 2026 · SDG <span class="n11">11</span></figcaption></figure>
+                    </li>
+                    <li class="row link">
+                        <span class="no">P-102</span>
+                        <div class="ttl">
+                            <h3><a href="revit-building.html">The Andreu Building</a></h3>
+                            <p class="desc">I led a team of three redesigning NYU's Jacobs building in Revit on a $28M budget. First Place, Nick Russo Award.</p>
+                            <p class="tools"><b>Tools</b> Revit, BIM, LEED Platinum, MEP</p>
+                            <span class="go">View sheet <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                        </div>
+                        <figure class="plate"><img src="images/web/revit-building2.jpg" width="1600" height="685" alt="Revit rendering of the Andreu Building facade" style="object-position:30% 50%"><figcaption>NYC · Fall 2023 · SDG <span class="n11">11</span> · <span class="n4">4</span></figcaption></figure>
+                    </li>
+                    <li class="row link">
+                        <span class="no">P-103</span>
+                        <div class="ttl">
+                            <h3><a href="laser-lamp.html">Laser-cut acrylic lamp</a></h3>
+                            <p class="desc">Twenty identical acrylic legs, modeled in AutoCAD and recut thicker after the first set snapped.</p>
+                            <p class="tools"><b>Tools</b> AutoCAD, laser cutting</p>
+                            <span class="go">View sheet <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+                        </div>
+                        <figure class="plate"><img src="images/web/laser-lamp.jpg" width="1200" height="1600" alt="The finished laser-cut lamp, lit"><figcaption>BKN · Summer 2025</figcaption></figure>
+                    </li>
+                    <li class="row">
+                        <span class="no">P-104</span>
+                        <div class="ttl">
+                            <h3>Rocket fin optimization</h3>
+                            <p class="desc">I compared eight fin configurations in OpenRocket and by hand, then built 3D-printed and wooden prototypes to tune flight stability for an award-winning NASA Student Launch team.</p>
+                            <p class="tools"><b>Tools</b> OpenRocket, hand calculations, 3D printing</p>
+                        </div>
+                        <figure class="plate"><img src="images/rocket-fins.jpg" width="603" height="452" alt="Rogue Aerospace team with rocket components"><figcaption>BKN · Sep 2024 – Jan 2025</figcaption></figure>
+                    </li>
+                    <li class="row">
+                        <span class="no">P-105</span>
+                        <div class="ttl">
+                            <h3>Building systems at WSP</h3>
+                            <p class="desc">I support energy analyses across 3+ client projects, producing CAD drawings, technical reports, and LEED- and ESG-aligned solutions.</p>
+                            <p class="tools"><b>Tools</b> AutoCAD, Revit, AFT Fathom, Pipeflo, Power BI</p>
+                        </div>
+                        <figure class="plate"><img src="images/web/wsp_energy.jpg" width="1139" height="690" alt="3D BIM model of generator and piping systems"><figcaption>NYC · 2025 – now · SDG <span class="n11">11</span></figcaption></figure>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <aside class="tb">
+            <div class="tb-photo"><img src="images/web/headshot.jpg" width="360" height="360" alt="Portrait of Mia Andreu"></div>
+            <div class="tb-id">
+                <p>Mechanical engineering, NYU Tandon '27. Intern at WSP. GLASS Scholar. Based in Brooklyn.</p>
+                <div class="btns">
+                    <a class="btn btn-solid" href="mia-andreu-resume.pdf" download><svg aria-hidden="true"><use href="#i-down"/></svg>Download CV</a>
+                    <a class="btn btn-line" href="mailto:mia.andreu@outlook.com"><svg aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
+                </div>
+            </div>
+            <nav class="tb-sheets" aria-label="Sheet index">
+                <span class="lbl">Sheet Index</span>
+                <ol>
+                    <li><a href="#projects">Projects <span class="no">P-101–105</span></a></li>
+                    <li><a href="#work">Work <span class="no">W-101–103</span></a></li>
+                    <li><a href="#about">About &amp; Study <span class="no">A-101–102</span></a></li>
+                    <li><a href="#glass">GLASS Scholar <span class="no">GL-101</span></a></li>
+                    <li><a href="#service">Service <span class="no">S-101–106</span></a></li>
+                    <li><a href="#contact">Contact <span class="no">C-000</span></a></li>
+                </ol>
+            </nav>
+            <div class="tb-sdg">
+                <span class="lbl">Connecting Goals</span>
+                <span class="goal"><span class="sdg s4" aria-hidden="true">4</span>Quality Education</span>
+                <span class="goal"><span class="sdg" aria-hidden="true">11</span>Sustainable Cities and Communities</span>
+            </div>
+            <div class="tb-no"><div><span class="lbl">Sheet</span>Cover &amp; index</div><b class="no-big">T-000</b></div>
+        </aside>
+    </div>
+</header>
+
+<!-- ============ WORK ============ -->
+<section class="sheet" id="work" aria-labelledby="h-work">
+    <div class="refs" aria-hidden="true">
+        <div class="t"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="l"><span>A</span><span>B</span><span>C</span></div>
+        <div class="r"><span>A</span><span>B</span><span>C</span></div>
+        <div class="b"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+    </div>
+    <div class="sheet-head"><div><h2 id="h-work">Work</h2><p>Three roles, most recent first.</p></div><span class="sno">W-101–103</span></div>
+    <ol class="rows">
+        <li class="row">
+            <span class="no">W-101</span>
+            <div class="ttl">
+                <h3>WSP</h3>
+                <p class="role">Mechanical engineering energy intern</p>
+                <ul>
+                    <li>Laid out mechanical systems in AutoCAD for a biogas-to-power facility, including digesters, generators, heat exchangers, and backup boilers</li>
+                    <li>Ran pump sizing and heat exchanger calculations in AFT Fathom and Bluebeam to support client-facing design decisions on a combined-cycle power plant</li>
+                    <li>Picked up Revit, Pipeflo, and Power BI across five more projects after the first summer</li>
+                </ul>
+            </div>
+            <span class="meta"><span class="code">NYC</span><br>Jun 2025 – now<br><span class="sdg" title="SDG 11: Sustainable Cities and Communities" aria-hidden="true">11</span></span>
+        </li>
+        <li class="row">
+            <span class="no">W-102</span>
+            <div class="ttl">
+                <h3>Piedmont Service Group</h3>
+                <p class="role">Energy sustainability systems intern</p>
+                <ul>
+                    <li>Built Excel models that validated <strong>$362K</strong> in projected energy savings</li>
+                    <li>Joined energy audits and site walkthroughs for Investment Grade Audits of commercial clients</li>
+                    <li>Drafted Energy Savings Performance Contracts and capital expenditure documents</li>
+                </ul>
+            </div>
+            <span class="meta"><span class="code">RDU</span><br>Jun – Aug 2024<br><span class="sdg" title="SDG 11: Sustainable Cities and Communities" aria-hidden="true">11</span></span>
+        </li>
+        <li class="row">
+            <span class="no">W-103</span>
+            <div class="ttl">
+                <h3>Rogue Aerospace, NYU Tandon</h3>
+                <p class="role">Dynamics team member</p>
+                <ul>
+                    <li>Analyzed eight fin configurations and built 3D-printed and wooden prototypes for flight stability</li>
+                    <li>Contributed to a NASA Student Launch Initiative award-winning team</li>
+                </ul>
+            </div>
+            <span class="meta"><span class="code">BKN</span><br>Sep 2024 – Jan 2025</span>
+        </li>
+    </ol>
+</section>
+
+<!-- ============ ABOUT & STUDY ============ -->
+<section class="sheet" id="about" aria-labelledby="h-about">
+    <div class="refs" aria-hidden="true">
+        <div class="t"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="l"><span>A</span><span>B</span><span>C</span></div>
+        <div class="r"><span>A</span><span>B</span><span>C</span></div>
+        <div class="b"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+    </div>
+    <div class="sheet-head"><h2 id="h-about">About &amp; study</h2><span class="sno">A-101–102</span></div>
+    <div class="about-grid">
+        <div class="notes">
+            <p>I'm the oldest of three, and I've loved building things for as long as I can remember. My favorite kind of problem is a puzzle I can work from start to finish. That mix of art and problem-solving brought me to <strong>NYU Tandon</strong>, where I study mechanical engineering with a focus on <strong>sustainable cities and communities</strong>.</p>
+            <p>Cities keep me because the constraints are real: code requirements, budgets, physics, and the people who live with the result. The solutions that work hold up under all of them at once. And the ones that last are the ones communities understand, which is why teaching matters to me as much as building. That's the kind of problem I want to keep working on.</p>
+            <p>Outside the lab or a job site, I'm probably knitting, lifting, or wandering a museum.</p>
+        </div>
+        <ol class="rows edu-rows">
+            <li class="row">
+                <span class="no">A-101</span>
+                <div class="ttl">
+                    <h3>New York University, Tandon School of Engineering</h3>
+                    <p class="role">B.S. Mechanical Engineering. 3.9 / 4.0 GPA, Dean's List.</p>
+                </div>
+                <span class="meta"><span class="code">NYC</span><br>Expected May 2027</span>
+            </li>
+            <li class="row">
+                <span class="no">A-102</span>
+                <div class="ttl">
+                    <h3>Politecnico di Milano</h3>
+                    <p class="role">Study abroad through the GLASS program</p>
+                </div>
+                <span class="meta"><span class="code">MIL</span><br>Spring 2025</span>
+            </li>
+        </ol>
     </div>
 </section>
 
-<!-- SKILLS TICKER -->
-<div class="ticker-wrap">
-    <div class="ticker" id="ticker">
-        <span>AutoCAD</span><span class="dot">&bull;</span>
-        <span>SolidWorks</span><span class="dot">&bull;</span>
-        <span>Fusion 360</span><span class="dot">&bull;</span>
-        <span>BIM Revit</span><span class="dot">&bull;</span>
-        <span>Bluebeam</span><span class="dot">&bull;</span>
-        <span>Pipeflo</span><span class="dot">&bull;</span>
-        <span>Power BI</span><span class="dot">&bull;</span>
-        <span>Python</span><span class="dot">&bull;</span>
-        <span>MS Project</span><span class="dot">&bull;</span>
-        <span>Open Rocket</span><span class="dot">&bull;</span>
-        <span>GAMA Platform</span><span class="dot">&bull;</span>
-        <!-- duplicate for seamless loop -->
-        <span>AutoCAD</span><span class="dot">&bull;</span>
-        <span>SolidWorks</span><span class="dot">&bull;</span>
-        <span>Fusion 360</span><span class="dot">&bull;</span>
-        <span>BIM Revit</span><span class="dot">&bull;</span>
-        <span>Bluebeam</span><span class="dot">&bull;</span>
-        <span>Pipeflo</span><span class="dot">&bull;</span>
-        <span>Power BI</span><span class="dot">&bull;</span>
-        <span>Python</span><span class="dot">&bull;</span>
-        <span>MS Project</span><span class="dot">&bull;</span>
-        <span>Open Rocket</span><span class="dot">&bull;</span>
-        <span>GAMA Platform</span><span class="dot">&bull;</span>
+<!-- ============ GLASS ============ -->
+<section class="sheet" id="glass" aria-labelledby="h-glass">
+    <div class="refs" aria-hidden="true">
+        <div class="t"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="l"><span>A</span><span>B</span><span>C</span></div>
+        <div class="r"><span>A</span><span>B</span><span>C</span></div>
+        <div class="b"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
     </div>
-</div>
-<div class="ticker-wrap">
-    <div class="ticker" id="ticker2">
-        <span>3D Printing</span><span class="dot">&bull;</span>
-        <span>Technical Writing</span><span class="dot">&bull;</span>
-        <span>Data Analysis</span><span class="dot">&bull;</span>
-        <span>LEED Standards</span><span class="dot">&bull;</span>
-        <span>ESG Frameworks</span><span class="dot">&bull;</span>
-        <!-- duplicate for seamless loop -->
-        <span>3D Printing</span><span class="dot">&bull;</span>
-        <span>Technical Writing</span><span class="dot">&bull;</span>
-        <span>Data Analysis</span><span class="dot">&bull;</span>
-        <span>LEED Standards</span><span class="dot">&bull;</span>
-        <span>ESG Frameworks</span><span class="dot">&bull;</span>
+    <div class="sheet-head"><div><h2 id="h-glass">Global Leaders and Scholars in STEM</h2><p>I was selected as one of 26 GLASS Scholars in NYU Tandon's 2025 cohort.</p></div><span class="sno">GL-101</span></div>
+    <dl class="legend">
+        <div><dt>Global</dt><dd>Milan, Vietnam, 8 countries</dd></div>
+        <div><dt>Service</dt><dd>STEAM tutoring, community events</dd></div>
+        <div><dt>Leadership</dt><dd>AIAA secretary, team projects</dd></div>
+        <div><dt>Academic</dt><dd>3.9 GPA, Dean's List</dd></div>
+        <div><dt>Professional</dt><dd>WSP, Piedmont, VinUniversity</dd></div>
+    </dl>
+    <div class="spec-note">
+        <p>My global challenge ties two UN goals together: <strong>Sustainable Cities and Communities (SDG 11)</strong> and <strong>Quality Education (SDG 4)</strong>. Cities only get more sustainable when the people in them can learn, build, and lead.</p>
+        <p>WSP and Piedmont showed me how much energy commercial buildings waste. Hanoi showed me how one intersection shapes the air a whole neighborhood breathes. Teaching in Antigua and tutoring in Durham showed me what a classroom can change. Milan and Hanoi taught me that solutions have to be designed <em>with</em> communities, not just <em>for</em> them.</p>
     </div>
-</div>
+    <div class="plates-row">
+        <figure class="plate"><img src="images/web/glass1.jpg" width="1600" height="1067" alt="GLASS Scholars cohort presentation event"><figcaption>FIG. 1 — Cohort presentation event</figcaption></figure>
+        <figure class="plate"><img src="images/web/glass2.jpg" width="1600" height="1067" alt="GLASS Scholars cohort gathering"><figcaption>FIG. 2 — Cohort gathering</figcaption></figure>
+    </div>
+</section>
 
-<!-- ABOUT -->
-<section id="about" class="sec">
-    <div class="sec-hdr reveal">
-        <div class="sec-num">01 About</div>
-        <h2 class="sec-t">About me</h2>
+<!-- ============ SERVICE ============ -->
+<section class="sheet" id="service" aria-labelledby="h-service">
+    <div class="refs" aria-hidden="true">
+        <div class="t"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="l"><span>A</span><span>B</span><span>C</span></div>
+        <div class="r"><span>A</span><span>B</span><span>C</span></div>
+        <div class="b"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
     </div>
-    <div class="about-cols">
-        <div class="about-text reveal">
-            <p>
-                I'm the oldest of three, and I've loved building things for as long as I can remember. Any puzzle laid out in front of me that I can work from start to finish is the most satisfying thing. That mix of art and problem-solving is what brought me to <strong>NYU Tandon</strong>, where I'm studying mechanical engineering with a focus on <strong>sustainable energy systems</strong>.
-            </p>
-            <p>
-                I've interned at <strong>WSP</strong> doing energy modeling for commercial buildings, validated <strong>$362K in energy savings</strong> at Piedmont Service Group, and helped design an award-winning <strong>LEED Platinum building</strong> in Revit. I've also built rocket fins for a NASA competition and traveled to Vietnam to model air quality solutions using digital twin simulations.
-            </p>
-            <p>
-                What keeps me in energy specifically is that the constraints are real &mdash; code requirements, budgets, physics &mdash; and the solutions that actually work are the ones that hold up under all of them at once. That's the kind of problem I want to keep working on.
-            </p>
-            <p>
-                When I'm not in the lab or on a job site, I'm probably knitting, lifting weights, or exploring a museum somewhere. I like making things, sharing what I make, and being part of something bigger than myself.
-            </p>
+    <div class="sheet-head"><h2 id="h-service">Service &amp; leadership</h2><span class="sno">S-101–106</span></div>
+    <ol class="rows with-fig">
+        <li class="row">
+            <span class="no">S-101</span>
+            <div class="ttl">
+                <h3>Máximo Nivel</h3>
+                <p class="role">Volunteer English teacher, Antigua, Guatemala</p>
+                <p class="desc">I taught English to primary-school students through a program for families without access to private language classes. I also hiked Acatenango overnight to watch Volcán de Fuego erupt at sunrise, a test of pushing on when stopping would have been easier.</p>
+            </div>
+            <figure class="plate"><img src="images/web/maximo-nivel-classroom-2.jpg" width="1600" height="1200" alt="A student's completed English worksheet from class in Antigua"><figcaption>GUA · Aug 2026 · SDG <span class="n4">4</span></figcaption></figure>
+        </li>
+        <li class="row">
+            <span class="no">S-102</span>
+            <div class="ttl">
+                <h3>AIAA at NYU</h3>
+                <p class="role">Secretary, American Institute of Aeronautics and Astronautics</p>
+                <p class="desc">I keep the chapter's records and run its internal communications and administration.</p>
+            </div>
+            <span class="meta"><span class="code">NYC</span><br>Oct 2025 – now</span>
+        </li>
+        <li class="row">
+            <span class="no">S-103</span>
+            <div class="ttl">
+                <h3>Society of Women Engineers</h3>
+                <p class="role">Member; attended the national SWE24 conference</p>
+                <p class="desc">I support women in engineering through networking, mentorship, and professional development.</p>
+            </div>
+            <figure class="plate"><img src="images/web/swe.jpg" width="1200" height="1600" alt="Mia at the SWE24 conference"><figcaption>NYC · 2023 – now · SDG <span class="n4">4</span></figcaption></figure>
+        </li>
+        <li class="row">
+            <span class="no">S-104</span>
+            <div class="ttl">
+                <h3>Brooklyn Book Bodega</h3>
+                <p class="role">Volunteer</p>
+                <p class="desc">At community literacy events, I run hands-on creative activities for kids and families.</p>
+            </div>
+            <figure class="plate"><img src="images/web/brooklyn-bodega.jpg" width="1200" height="1600" alt="Volunteering at a Brooklyn Book Bodega community event"><figcaption>BKN · Community · SDG <span class="n4">4</span></figcaption></figure>
+        </li>
+        <li class="row">
+            <span class="no">S-105</span>
+            <div class="ttl">
+                <h3>ASME at NYU</h3>
+                <p class="role">Member, American Society of Mechanical Engineers</p>
+            </div>
+            <span class="meta"><span class="code">NYC</span><br>2023 – now</span>
+        </li>
+        <li class="row">
+            <span class="no">S-106</span>
+            <div class="ttl">
+                <h3>Durham Children's Initiative</h3>
+                <p class="role">Tutor and volunteer</p>
+                <p class="desc">I led 12 weeks of STEAM Saturdays for 30 students in grades K–8.</p>
+            </div>
+            <span class="meta"><span class="code">DUR</span><br>Summer 2022<br><span class="sdg s4" title="SDG 4: Quality Education" aria-hidden="true">4</span></span>
+        </li>
+    </ol>
+    <div class="detail">
+        <h3>Reference detail · Loopma</h3>
+        <p>Knitting and crochet are where I slow down and make something simple with my hands. I sell a few pieces under the name Loopma.</p>
+        <div class="links">
+            <a class="tlink" href="https://www.etsy.com/shop/loopma" target="_blank" rel="noopener">Etsy shop <svg aria-hidden="true"><use href="#i-out"/></svg></a>
+            <a class="tlink" href="https://instagram.com/l00pma" target="_blank" rel="noopener">Instagram @l00pma <svg aria-hidden="true"><use href="#i-out"/></svg></a>
         </div>
+    </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="sheet" id="contact" aria-labelledby="h-contact">
+    <div class="refs" aria-hidden="true">
+        <div class="t"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+        <div class="l"><span>A</span><span>B</span><span>C</span></div>
+        <div class="r"><span>A</span><span>B</span><span>C</span></div>
+        <div class="b"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+    </div>
+    <div class="sheet-head"><h2 id="h-contact">Let's talk</h2><span class="sno">C-000</span></div>
+    <div class="contact-grid">
         <div>
-            <div class="edu reveal">
-                <div class="edu-school">New York University</div>
-                <div class="edu-deg">B.S. Mechanical Engineering &middot; Tandon School of Engineering</div>
-                <div class="edu-meta">
-                    <span class="edu-gpa">3.9 / 4.0 &middot; Dean's List</span>
-                    <span class="edu-date">Expected May 2027</span>
-                </div>
-            </div>
-            <div class="edu reveal">
-                <div class="edu-school">Politecnico di Milano</div>
-                <div class="edu-deg">Study Abroad &middot; GLASS Program</div>
-                <div class="edu-meta">
-                    <span class="edu-gpa">Milan, Italy</span>
-                    <span class="edu-date">Spring 2025</span>
-                </div>
+            <p>I'm always happy to talk about sustainable buildings and cities, engineering education, and outreach.</p>
+            <div class="reach">
+                <a class="tlink" href="mailto:mia.andreu@outlook.com"><svg aria-hidden="true"><use href="#i-mail"/></svg>mia.andreu@outlook.com</a>
+                <a class="tlink" href="https://linkedin.com/in/miaandreu" target="_blank" rel="noopener">linkedin.com/in/miaandreu <svg aria-hidden="true"><use href="#i-out"/></svg></a>
+                <span class="plain"><svg aria-hidden="true"><use href="#i-pin"/></svg>Brooklyn, New York</span>
             </div>
         </div>
+        <form class="form" action="https://formspree.io/f/myeypnor" method="POST" id="contactForm">
+            <div><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name" required></div>
+            <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required></div>
+            <div><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="What are you working on?" required></textarea></div>
+            <button type="submit" class="btn btn-solid">Send message <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
     </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- EXPERIENCE -->
-<section id="experience" class="sec">
-    <div class="sec-hdr reveal">
-        <div class="sec-num">02 Experience</div>
-        <h2 class="sec-t">Where I've worked</h2>
-        <p class="sec-sub">Click any role to expand details.</p>
-    </div>
-    <div class="exp-list">
-        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
-            <div>
-                <div class="exp-co">WSP</div>
-                <div class="exp-rl">Mechanical Engineering Energy Intern &middot; New York, NY</div>
-                <div class="exp-det">
-                    <ul>
-                        <li>Used AutoCAD to lay out mechanical systems &mdash; from digester equipment to generators, heat exchangers, and backup boilers &mdash; for a biogas-to-power generation facility</li>
-                        <li>Ran pump sizing and heat exchanger calculations in AFT Fathom and Bluebeam to support customer-facing design decisions on a combined-cycle power plant project</li>
-                        <li>Expanded from AutoCAD into Revit, Pipeflo, and Power BI across 5 additional projects following the first summer</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="exp-dt">Jun 2025 &ndash; Present</div>
-        </div>
-        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
-            <div>
-                <div class="exp-co">AIAA at NYU</div>
-                <div class="exp-rl">Secretary &middot; New York, NY</div>
-                <div class="exp-det">
-                    <ul>
-                        <li>Maintained chapter records, managed internal communications, and ensured smooth administrative operations</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="exp-dt">Oct 2025 &ndash; Present</div>
-        </div>
-        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
-            <div>
-                <div class="exp-co">Rogue Aerospace &middot; NYU Tandon</div>
-                <div class="exp-rl">Dynamics Team Member &middot; Brooklyn, NY</div>
-                <div class="exp-det">
-                    <ul>
-                        <li>Engineered 3D-print and wooden fin prototypes, applying quantitative analysis to optimize flight stability</li>
-                        <li>Analyzed 8 fin configurations using Open Rocket simulations and hand calculations</li>
-                        <li>Contributed to a NASA Student Launch Initiative award-winning team</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="exp-dt">Sep 2024 &ndash; Jan 2025</div>
-        </div>
-        <div class="exp-row reveal" onclick="this.classList.toggle('open')">
-            <div>
-                <div class="exp-co">Piedmont Service Group</div>
-                <div class="exp-rl">Energy Sustainability Systems Intern &middot; Raleigh, NC</div>
-                <div class="exp-det">
-                    <ul>
-                        <li>Supported energy audits and site walkthroughs for Investment Grade Audits for commercial clients</li>
-                        <li>Built Excel models to validate $362K in projected energy savings</li>
-                        <li>Drafted Energy Savings Performance Contracts and capital expenditure documents</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="exp-dt">Jun 2024 &ndash; Aug 2024</div>
-        </div>
-    </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="sec">
-    <div class="sec-hdr reveal">
-        <div class="sec-num">03 Projects</div>
-        <h2 class="sec-t">Things I've built</h2>
-    </div>
-    <div class="bento">
-        <!-- HANOI - large featured -->
-        <a href="hanoi-digital-twin.html" class="bento-item large reveal" style="text-decoration:none;color:inherit">
-            <img class="bento-img" src="images/digital-twin.jpeg" alt="Presenting digital twin model for Hanoi air quality">
-            <div class="bento-body">
-                <div class="bento-badge">VinUniversity &middot; Hanoi, Vietnam</div>
-                <div class="bento-title">Modeling Air Quality Solutions in Hanoi</div>
-                <p class="bento-desc">
-                    Collaborated across disciplines and cultures to tackle traffic congestion and air quality in Hanoi. Our team visited multiple districts to observe traffic patterns firsthand, then used the GAMA platform and digital twin simulations to test an air quality improvement approach in a virtual environment before real-world implementation.
-                </p>
-                <div class="bento-tags">
-                    <span class="bento-tag">GAMA Platform</span>
-                    <span class="bento-tag">Digital Twin</span>
-                    <span class="bento-tag">Air Quality</span>
-                    <span class="bento-tag">Global Collaboration</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- LEED BUILDING -->
-        <a href="revit-building.html" class="bento-item reveal" style="text-decoration:none;color:inherit">
-            <img class="bento-img" src="images/revit-building(2).png" alt="The Andreu Building exterior facade rendering">
-            <div class="bento-body">
-                <div class="bento-badge">First Place, Nick Russo Award</div>
-                <div class="bento-title">LEED Platinum Building Design</div>
-                <p class="bento-desc">
-                    Designed "The Andreu Building," an 8-story LEED Platinum replacement for NYU Jacob's Academic Building. 100 dorms, 18 classrooms, full MEP systems, rooftop green space.
-                </p>
-                <div class="bento-tags">
-                    <span class="bento-tag">BIM Revit</span>
-                    <span class="bento-tag">LEED</span>
-                    <span class="bento-tag">MEP</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- ROCKET FINS -->
-        <div class="bento-item static reveal">
-            <img class="bento-img" src="images/rocket-fins.jpg" alt="Rogue Aerospace team with rocket components">
-            <div class="bento-body">
-                <div class="bento-badge">NASA SLI Award Winner</div>
-                <div class="bento-title">Rocket Fin Optimization</div>
-                <p class="bento-desc">
-                    Analyzed 8 fin configurations via Open Rocket simulations and hand calculations. Engineered 3D-printed and wooden prototypes to optimize flight stability for competition.
-                </p>
-                <div class="bento-tags">
-                    <span class="bento-tag">Open Rocket</span>
-                    <span class="bento-tag">3D Printing</span>
-                    <span class="bento-tag">Aerodynamics</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- LASER LAMP -->
-        <a href="laser-lamp.html" class="bento-item reveal" style="text-decoration:none;color:inherit">
-            <img class="bento-img" src="images/Laser-lamp.jpg" alt="Illuminated laser-cut acrylic lamp">
-            <div class="bento-body">
-                <div class="bento-title">Laser Lamp</div>
-                <p class="bento-desc">
-                    Designed and fabricated a 12-inch lamp from two AutoCAD-modeled fit pieces and twenty repeated laser-cut acrylic legs. An exploration of light diffusion, material properties, and the intersection of craft and precision engineering.
-                </p>
-                <div class="bento-tags">
-                    <span class="bento-tag">AutoCAD</span>
-                    <span class="bento-tag">Laser Cutting</span>
-                    <span class="bento-tag">Fabrication</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- WSP -->
-        <div class="bento-item static reveal">
-            <img class="bento-img" src="images/wsp_energy.jpeg" alt="WSP energy systems 3D BIM model">
-            <div class="bento-body">
-                <div class="bento-title">WSP Energy Optimization</div>
-                <p class="bento-desc">
-                    Supporting energy analyses across 3+ client projects at one of the world's largest engineering firms. CAD drawings, technical reports, LEED and ESG-aligned solutions.
-                </p>
-                <div class="bento-tags">
-                    <span class="bento-tag">AutoCAD</span>
-                    <span class="bento-tag">LEED</span>
-                    <span class="bento-tag">ESG</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- LEADERSHIP -->
-<section id="leadership" class="sec">
-    <div class="sec-hdr reveal">
-        <div class="sec-num">04 Leadership &amp; Service</div>
-        <h2 class="sec-t">Beyond the classroom</h2>
-    </div>
-
-    <div class="lead-grid">
-        <div class="lead-card reveal">
-            <img class="lead-card-img" src="images/swe.jpg" alt="Mia at SWE24 conference">
-            <div class="lead-card-body">
-                <div class="lead-org">Society of Women Engineers</div>
-                <div class="lead-role">SWE24 Conference Attendee &middot; Member</div>
-                <div class="lead-date">2023 &ndash; Present</div>
-                <p class="lead-desc">Active member supporting women in engineering through networking, mentorship, and professional development. Attended the national SWE24 conference.</p>
-            </div>
-        </div>
-        <div class="lead-card reveal">
-            <img class="lead-card-img" src="images/brooklyn-bodega.jpeg" alt="Volunteering at Brooklyn Book Bodega community event">
-            <div class="lead-card-body">
-                <div class="lead-org">Community Service</div>
-                <div class="lead-role">Brooklyn Book Bodega &middot; Volunteer</div>
-                <div class="lead-date">Brooklyn, NY</div>
-                <p class="lead-desc">Volunteered at community literacy events, engaging kids and families through hands-on creative activities in Brooklyn.</p>
-            </div>
-        </div>
-        <div class="lead-card reveal">
-            <img class="lead-card-img" src="images/maximo-nivel-classroom-2.jpg" alt="Student's English worksheet completed during class in Antigua, Guatemala">
-            <div class="lead-card-body">
-                <div class="lead-org">Máximo Nivel</div>
-                <div class="lead-role">Volunteer English Teacher &middot; Antigua, Guatemala</div>
-                <div class="lead-date">Aug 2026</div>
-                <p class="lead-desc">Taught English to primary-school students through a program serving families without access to private language instruction. Hiked Acatenango overnight to summit at sunrise and watch Volc&aacute;n de Fuego erupt &mdash; a personal test of pushing through when it would've been easier to stop.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="lead-list reveal">
-        <div class="lead-row">
-            <div class="lead-row-left">
-                <div>AIAA at NYU</div>
-                <div>Secretary &middot; American Institute of Aeronautics and Astronautics</div>
-            </div>
-            <div class="lead-row-right">Oct 2025 &ndash; Present</div>
-        </div>
-        <div class="lead-row">
-            <div class="lead-row-left">
-                <div>ASME at NYU</div>
-                <div>Member &middot; American Society of Mechanical Engineers</div>
-            </div>
-            <div class="lead-row-right">2023 &ndash; Present</div>
-        </div>
-        <div class="lead-row">
-            <div class="lead-row-left">
-                <div>Durham Children's Initiative</div>
-                <div>Tutor &amp; Volunteer &middot; Led 12 weeks of STEAM Saturdays for 30 K&ndash;8 students</div>
-            </div>
-            <div class="lead-row-right">Summer 2022</div>
-        </div>
-    </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- GLASS -->
-<section id="glass" class="sec">
-    <div class="sec-hdr reveal">
-        <div class="sec-num">05 GLASS Scholar</div>
-        <h2 class="sec-t">Global Leaders and Scholars in STEM</h2>
-        <p class="sec-sub">Selected as 1 of 26 scholars &middot; Cohort 2025 &middot; NYU Tandon</p>
-    </div>
-
-    <div class="glass-bar reveal">
-        <div class="glass-seg">
-            <div class="glass-seg-name">Global</div>
-            <div class="glass-seg-desc">Milan &middot; Vietnam &middot; 8 countries</div>
-        </div>
-        <div class="glass-seg">
-            <div class="glass-seg-name">Service</div>
-            <div class="glass-seg-desc">STEAM tutoring &middot; community events</div>
-        </div>
-        <div class="glass-seg">
-            <div class="glass-seg-name">Leadership</div>
-            <div class="glass-seg-desc">AIAA Secretary &middot; team projects</div>
-        </div>
-        <div class="glass-seg">
-            <div class="glass-seg-name">Academic</div>
-            <div class="glass-seg-desc">3.9 GPA &middot; Dean's List</div>
-        </div>
-        <div class="glass-seg">
-            <div class="glass-seg-name">Professional</div>
-            <div class="glass-seg-desc">WSP &middot; Piedmont &middot; VinUni</div>
-        </div>
-    </div>
-
-    <div class="reveal" style="display:flex;gap:1.5rem;margin-bottom:2rem;justify-content:center">
-        <img src="images/GLASS(1).JPG" alt="GLASS Scholar cohort presentation event" style="width:42%;border-radius:var(--r);border:1px solid var(--bdr);display:block;object-fit:cover">
-        <img src="images/GLASS2.JPG" alt="GLASS Scholars cohort gathering" style="width:42%;border-radius:var(--r);border:1px solid var(--bdr);display:block;object-fit:cover">
-    </div>
-
-    <div class="glass-focus reveal">
-        <div class="glass-focus-lbl">Global Focus Area</div>
-        <p>
-            My global challenge centers on <strong>sustainable energy systems</strong>, exploring how engineering innovation can democratize access to clean energy, reduce emissions, and create equitable climate solutions. My work at WSP and Piedmont Service Group showed me how much energy is wasted in commercial buildings. Studying abroad in Milan and collaborating in Vietnam taught me that solutions have to be designed <em>with</em> communities, not just <em>for</em> them.
-        </p>
-    </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CROCHET -->
-<section id="crochet" class="sec">
-    <div class="sec-hdr reveal">
-        <div class="sec-num">06 Loopma</div>
-        <h2 class="sec-t">Extra crafts</h2>
-        <p class="sec-sub">Knitting and crochet is where I slow down and make something simple with my hands.</p>
-    </div>
-    <div class="reveal" style="display:flex;gap:1rem;flex-wrap:wrap">
-        <a href="https://www.etsy.com/shop/loopma" target="_blank" rel="noopener" class="c-link" style="flex:1;min-width:240px">
-            <div class="c-link-icon">&#129526;</div>
-            <div>
-                <div class="c-link-lbl">Etsy Shop</div>
-                <div class="c-link-val">etsy.com/shop/loopma</div>
-            </div>
-        </a>
-        <a href="https://instagram.com/l00pma" target="_blank" rel="noopener" class="c-link" style="flex:1;min-width:240px">
-            <div class="c-link-icon">&#128247;</div>
-            <div>
-                <div class="c-link-lbl">Instagram</div>
-                <div class="c-link-val">@l00pma</div>
-            </div>
-        </a>
-    </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CONTACT -->
-<section id="contact" class="sec">
-    <div class="sec-hdr reveal">
-        <div class="sec-num">07 Contact</div>
-        <h2 class="sec-t">Let's connect</h2>
-    </div>
-    <div class="contact-cols">
-        <div>
-            <p class="contact-text reveal">
-                I'm always interested in hearing about new opportunities, collaborations, or interesting problems to solve. Whether it's an internship, research, or just a conversation about sustainable engineering, reach out.
-            </p>
-            <div class="c-links reveal">
-                <a href="mailto:mia.andreu@outlook.com" class="c-link">
-                    <div class="c-link-icon">&#9993;</div>
-                    <div>
-                        <div class="c-link-lbl">Email</div>
-                        <div class="c-link-val">mia.andreu@outlook.com</div>
-                    </div>
-                </a>
-                <a href="https://linkedin.com/in/miaandreu" target="_blank" rel="noopener" class="c-link">
-                    <div class="c-link-icon">&#128279;</div>
-                    <div>
-                        <div class="c-link-lbl">LinkedIn</div>
-                        <div class="c-link-val">linkedin.com/in/miaandreu</div>
-                    </div>
-                </a>
-                <div class="c-link" style="cursor:default">
-                    <div class="c-link-icon">&#128205;</div>
-                    <div>
-                        <div class="c-link-lbl">Location</div>
-                        <div class="c-link-val">Brooklyn, New York</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="reveal">
-            <form class="contact-form" action="https://formspree.io/f/myeypnor" method="POST" onsubmit="handleSubmit(event)">
-                <div><label class="cf-label" for="name">Name</label><input class="cf-input" type="text" id="name" placeholder="Your name" required></div>
-                <div><label class="cf-label" for="email">Email</label><input class="cf-input" type="email" id="email" placeholder="your@email.com" required></div>
-                <div><label class="cf-label" for="message">Message</label><textarea class="cf-textarea" id="message" placeholder="What's on your mind?" required></textarea></div>
-                <button type="submit" class="btn btn-g" style="width:100%;justify-content:center;font-family:var(--f)">Send Message</button>
-            </form>
-        </div>
-    </div>
-</section>
-
-</main>
-
-<footer>
-    <p>&copy; 2026 Mia Andreu</p>
-    <div class="flinks">
-        <a href="#hero">Top</a>
-        <a href="https://linkedin.com/in/miaandreu" target="_blank">LinkedIn</a>
+<footer class="foot">
+    <p>© 2026 Mia Andreu</p>
+    <nav aria-label="Footer">
+        <a href="#cover">Back to the top</a>
+        <a href="https://linkedin.com/in/miaandreu" target="_blank" rel="noopener">LinkedIn</a>
         <a href="mailto:mia.andreu@outlook.com">Email</a>
-    </div>
+    </nav>
 </footer>
+</div>
 
 <script>
-// Mobile nav
-document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
-document.querySelectorAll('.nlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+// ---- plot progress + sheet reveal + sheet-index highlighter ----
+(function(){
+    const plot=document.getElementById('plot');
+    const sheets=[...document.querySelectorAll('.sheet')];
+    const navLinks=[...document.querySelectorAll('.tb-sheets a')];
 
-// Nav shadow + scroll spy
-const nav=document.getElementById('navbar'),secs=document.querySelectorAll('section[id]'),navAs=document.querySelectorAll('.nlinks a:not(.cta)');
-window.addEventListener('scroll',()=>{
-    nav.classList.toggle('scrolled',scrollY>10);
-    let cur='';
-    secs.forEach(s=>{if(scrollY>=s.offsetTop-120)cur=s.id});
-    navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
-},{passive:true});
+    // progressive enhancement: only pre-hide sheets that start below the fold, so content
+    // never depends on JS for basic visibility (no-JS, slow JS, or a script error all fail safe to visible)
+    sheets.forEach(s=>{ if(s.getBoundingClientRect().top>innerHeight*0.85) s.classList.add('pre'); });
+    const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.remove('pre')})},{threshold:.1,rootMargin:'0px 0px -10% 0px'});
+    sheets.forEach(s=>io.observe(s));
 
-// Reveal on scroll
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-// Form
-async function handleSubmit(e){
-    e.preventDefault();
-    const form=e.target,b=form.querySelector('button'),orig=b.textContent;
-    b.disabled=true;b.textContent='Sending...';
-    try{
-        const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-        if(res.ok){
-            b.textContent='\u2713 Sent!';b.style.background='#059669';b.style.color='#fff';
-            form.reset();
-        }else{
-            b.textContent='Failed \u2014 try again';b.style.background='#dc2626';b.style.color='#fff';
-        }
-    }catch(err){
-        b.textContent='Failed \u2014 try again';b.style.background='#dc2626';b.style.color='#fff';
+    let ticking=false;
+    function update(){
+        ticking=false;
+        const h=document.documentElement.scrollHeight-innerHeight;
+        plot.style.transform='scaleX('+(h>0 ? Math.min(1,scrollY/h) : 0)+')';
+        const eye=innerHeight*0.4;
+        let cur=sheets[0];
+        sheets.forEach(s=>{ if(s.getBoundingClientRect().top<eye) cur=s; });
+        navLinks.forEach(a=>a.classList.toggle('is-here', a.getAttribute('href')==='#'+cur.id));
     }
-    setTimeout(()=>{b.disabled=false;b.textContent=orig;b.style.background='';b.style.color=''},2500);
-}
-</script>
+    addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(update); } },{passive:true});
+    addEventListener('resize',update);
+    update();
+})();
 
+// ---- Contact form ----
+(function(){
+    const form=document.getElementById('contactForm'), status=document.getElementById('formStatus');
+    form.addEventListener('submit',async e=>{
+        e.preventDefault();
+        const b=form.querySelector('button'), label=b.innerHTML;
+        b.disabled=true; b.textContent='Sending…'; status.className='form-status'; status.textContent='';
+        try{
+            const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+            if(!res.ok) throw new Error();
+            form.reset();
+            status.className='form-status ok';
+            status.textContent='Sent. Thank you, I’ll reply by email.';
+        }catch(err){
+            status.className='form-status err';
+            status.textContent='That didn’t send. Please try again, or email mia.andreu@outlook.com directly.';
+        }
+        b.disabled=false; b.innerHTML=label;
+    });
+})();
+</script>
 </body>
 </html>
